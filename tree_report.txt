@@ -1,0 +1,152 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 17 files
+Detected 1 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: cosine_metric_learning/train_app.py
+--------------------------------------------------------------------------------
+cosine_metric_learning/train_app.py:488:2: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'cosine_metric_learning/'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/vis_tools.py'
+ outputting to 'cosine_metric_learning2/vis_tools.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/train_app.py'
+ outputting to 'cosine_metric_learning2/train_app.py'
+--------------------------------------------------------------------------------
+
+488:2: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/metrics.py'
+ outputting to 'cosine_metric_learning2/metrics.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/train_ants.py'
+ outputting to 'cosine_metric_learning2/train_ants.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/losses.py'
+ outputting to 'cosine_metric_learning2/losses.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/queued_trainer.py'
+ outputting to 'cosine_metric_learning2/queued_trainer.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/BUMBLEBEES/bbox_test/scripts for labeling/bbox.py'
+ outputting to 'cosine_metric_learning2/BUMBLEBEES/bbox_test/scripts for labeling/bbox.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/BUMBLEBEES/bbox_test/scripts for labeling/cli2.py'
+ outputting to 'cosine_metric_learning2/BUMBLEBEES/bbox_test/scripts for labeling/cli2.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/BUMBLEBEES/bbox_test/scripts for labeling/gui2.py'
+ outputting to 'cosine_metric_learning2/BUMBLEBEES/bbox_test/scripts for labeling/gui2.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/datasets/ants.py'
+ outputting to 'cosine_metric_learning2/datasets/ants.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/datasets/util.py'
+ outputting to 'cosine_metric_learning2/datasets/util.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/datasets/market1501.py'
+ outputting to 'cosine_metric_learning2/datasets/market1501.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/datasets/__init__.py'
+ outputting to 'cosine_metric_learning2/datasets/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/nets/__init__.py'
+ outputting to 'cosine_metric_learning2/nets/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/nets/ant_tracking/residual_net.py'
+ outputting to 'cosine_metric_learning2/nets/ant_tracking/residual_net.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/nets/ant_tracking/network_definition.py'
+ outputting to 'cosine_metric_learning2/nets/ant_tracking/network_definition.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'cosine_metric_learning/nets/ant_tracking/__init__.py'
+ outputting to 'cosine_metric_learning2/nets/ant_tracking/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+

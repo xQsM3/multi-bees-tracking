@@ -1,0 +1,11 @@
+Detectron2_training
+VisualMarkData
+cosine_metric_learning/ANTS
+ant_tracking/BUMBLEBEES/
+ant_tracking/ANTS
+ant_tracking/resources
+ant_tracking/rcnn/models
+ant_tracking/tmp
+ant_tracking/.ipynb_checkpoints
+ipynb_checkpoints
+
