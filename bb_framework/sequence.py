@@ -32,7 +32,7 @@ class Sequence():
         tracks = self.tracks
         pandaPath = {'frame_idx':tracks[:,0],'ID':tracks[:,1],'x':tracks[:,2],'y':tracks[:,3]}
         pandaPath = pd.DataFrame(pandaPath)
-        pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/"))        
+        pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/")) 
         self._generate_video(output_dir)
         
     def _generate_video(self,output_dir):
@@ -93,14 +93,17 @@ class Sequence3D():
     '''
     stores information of 3D tracks of a given sequence
     '''
-    def __init__(self,seq_dir,match_matrix):
+    def __init__(self,seq_dir,cam1,cam2,match_matrix):
         
         frame_paths = sorted(glob.glob(seq_dir+"/*.jpg") )
         image_shape = cv.imread(frame_paths[0]).shape
         max_frame_idx = len(frame_paths)
         
         self.seq_dir = seq_dir # string with directory path
-        self.sequence_name = os.path.basename(seq_dir) # basename of directory path
+        
+         
+        sequence_name = os.path.basename(seq_dir) # basename of directory path
+        self.sequence_name = sequence_name.replace(cam1,cam1+cam2)
         self.frame_paths = frame_paths # list of frame paths
         self.image_shape = image_shape # tuple (h,w,c)
         self.min_frame_idx = 0 # int
@@ -115,8 +118,11 @@ class Sequence3D():
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         tracks = self.tracks
-        pandaPath = {'frame_idx':tracks[:,0],'ID':tracks[:,1],'x':tracks[:,2],'y':tracks[:,3],'z':tracks[:,4]}
-        pandaPath = pd.DataFrame(pandaPath)
-        pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/"))
+        try:
+            pandaPath = {'frame_idx':list(map(tracks[:,0],int)),'ID':list(map(tracks[:,1],int)),'x':tracks[:,2],'y':tracks[:,3],'z':tracks[:,4]}
+            pandaPath = pd.DataFrame(pandaPath)
+            pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/"))
+        except:
+            pass
 
     

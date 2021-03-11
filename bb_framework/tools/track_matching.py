@@ -112,7 +112,7 @@ def match2D(sequence1,sequence2,stereo):
     
     # init empty match matrix
     match_matrix = np.zeros((max_track_id_1+1,max_track_id_2+1))
-    thresh = 10
+    thresh = 8
     match_matrix[:] = thresh +1
 
     
@@ -152,14 +152,13 @@ def match2D(sequence1,sequence2,stereo):
                 # (since epilines are vertical)
                 distances.append(d_is1)
 
-
             #remove outliers with IQR algorithm
             distancesc = distances.copy()
             if distances:
                 distances = np.array(distances)
                 IQR = iqr(distances)
                 Q3 = np.percentile(distances, 75, interpolation = 'midpoint')
-                Q = Q3 + IQR*1.5
+                Q = Q3 + IQR*0.5
                 distances = distances[distances<Q]
                 if distances.size > 0:
                     mean_dissmatch = np.mean(distances)
@@ -167,5 +166,4 @@ def match2D(sequence1,sequence2,stereo):
 
     # convert match matrix to boolean matrix, mean_dissmatch should be smaller then given threshold, to count as True match
     match_matrix = match_matrix < thresh
-    
     return match_matrix

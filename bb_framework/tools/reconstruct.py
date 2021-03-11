@@ -282,12 +282,11 @@ class SceneReconstruction3D:
         print('[INFO:] point distance: {0}'.format(pointDistance))
         
     def triangulate_tracks(self,sequence1,sequence2,sequence3D):
-        # prepare point arrays for triangulation, fill empty frame_idx with np.nans 
+        # prepare point arrays for triangulation, fill empty frame_idx with np.nans
         for id1,row in enumerate(sequence3D.match_matrix):
             for id2,el in enumerate(row):
                 if el == True:
                     track1 = sequence1.tracks[sequence1.tracks[:,1]==id1]
-                    
                     for frame_idx in range(sequence1.min_frame_idx,sequence1.max_frame_idx+1):
                         if len(track1[track1[:,0]==frame_idx]) == 0:
                             if 'pts1' in locals():
@@ -316,7 +315,10 @@ class SceneReconstruction3D:
                                 pts2 = np.array([track2[track2[:,0]==frame_idx][0,2:4]])
 
                     pts3D = self._triangulate(pts1,pts2,extrinsic_mode ="calib")
-
+                    # clear memory
+                    del pts1
+                    del pts2
+                    
                     #construct 3d tracks out of pts3D
                     for frame_idx,pt in enumerate(pts3D):
                         if np.isnan(pt).any():
@@ -326,10 +328,12 @@ class SceneReconstruction3D:
                             tracks = np.vstack((tracks,track_pt))
                         else:
                             tracks = track_pt
-        
-        # sort tracks array for frame_idx column            
-        tracks = tracks[tracks[:,0].argsort()]
-        return tracks
+        if 'tracks' in locals():
+            # sort tracks array for frame_idx column            
+            tracks = tracks[tracks[:,0].argsort()]
+            return tracks
+        else:
+            return np.nan
     def _check_for_vertical_stereo(self,P2):
         #checks if stereo pair is vertical or horizontal
         #look up OpenCV docu for this
