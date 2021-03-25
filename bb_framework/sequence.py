@@ -77,7 +77,7 @@ class Sequence():
                         # get points of track at frame_idx
                         pt1 = trackID[trackID[:,0]==idx-1][0,2],trackID[trackID[:,0]==idx-1][0,3]
                         pt2 = trackID[trackID[:,0]==idx][0,2],trackID[trackID[:,0]==idx][0,3]
-                        cv.rectangle(frame,pt1,pt2,id_colors[ID-1],2)
+                        cv.line(frame,pt1,pt2,id_colors[ID-1],2)
                                   
             frame_list.append(frame)         
         
