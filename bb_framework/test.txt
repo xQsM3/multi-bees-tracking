@@ -3,5 +3,9 @@ python tracking_app.py     --seq_dir=/home/linx123-rtx/multi-ants-tracking/ant_t
 
 
 
+## with visualization of the video
+python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display
 
-python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display=True
+
+## without visualization of the video
+python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --no-display

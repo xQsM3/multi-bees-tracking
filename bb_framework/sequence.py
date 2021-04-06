@@ -37,14 +37,13 @@ class Sequence():
         
     def _generate_video(self,output_dir):
         # create rainbow colors for IDs
-        id_min = min(self.tracks[:,1])
+        id_min = 1
         id_max = max(self.tracks[:,1])
-        
         rbg = np.array([255,0,0])
         id_colors = []
-        for i,ID in enumerate(range(id_min,id_max+1)):
+        for ID in range(id_min,id_max+1):
             # manipulate rbg
-            if i>0 and i%3 == 0:
+            if (ID-1)>0 and (ID-1)%3 == 0:
                 rbg = rbg//2
                 for e,num in enumerate(rbg):
                     if num ==0:
@@ -62,10 +61,8 @@ class Sequence():
             
             frame = cv.imread(self.frame_paths[frame_idx])
             for ID in range(id_min,id_max+1):
-                
                 # display ID colors on frame
                 font = cv.FONT_HERSHEY_SIMPLEX
-                
                 cv.putText(frame,str(ID),(50+ID*50,50), font, 2, id_colors[ID-1], 2, cv.LINE_AA)
                 
                 trackID = self.tracks[self.tracks[:,1]==ID]

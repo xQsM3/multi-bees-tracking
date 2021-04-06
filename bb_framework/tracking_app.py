@@ -181,6 +181,7 @@ def run(seq_dir,
         tracker.predict()
         # tracker.update(detections)
         tracker.update(appearances, frame_idx)
+
         # Update visualization.
         if display:
             image = cv2.imread(
@@ -188,7 +189,6 @@ def run(seq_dir,
             vis.set_image(image.copy())
             vis.draw_detections(appearances)
             vis.draw_trackers(tracker.tracks)
-
         # Store results.
         for track in tracker.tracks:
             if (not track.is_confirmed() or track.time_since_update > 1) and frame_idx > 1:  # 第一帧参与
@@ -203,7 +203,9 @@ def run(seq_dir,
         visualizer = visualization.Visualization(seq_info, update_ms=5)
     else:
         visualizer = visualization.NoVisualization(seq_info)
+
     visualizer.run(frame_callback)
+
     sequence.tracks = np.array(results_centered)
     cv2.destroyAllWindows()
     return sequence

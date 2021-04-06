@@ -51,7 +51,6 @@ def main_loop(main_dir,
         If True, show visualization of intermediate tracking results.
 
     """
-    
     #global values
     cameras = '159','160','161'
     maskCoordinates = {}
@@ -186,11 +185,14 @@ def parse_args():
     parser.add_argument(
         "--batch_size", help="batch size for detection, currently only bs=1 working ", type=int,default=1)
     parser.add_argument(
-        "--appearance_model", help="path to appearance model", default="/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/networks/bumblebees.pb")   
-    parser.add_argument(
-        "--display", help="Show intermediate tracking results",
-        default=True, type=bool)
+        "--appearance_model", help="path to appearance model", default="/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/networks/bumblebees.pb")
     
+    parser.add_argument(
+        '--display', help="Show intermediate tracking results",
+        default=True, action='store_true')
+    parser.add_argument(
+        '--no-display',
+        dest='display', action='store_false')
     return parser.parse_args()
     
 if __name__ == '__main__':
