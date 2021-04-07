@@ -153,7 +153,7 @@ def generate_appearance_descriptors(encoder, sequence):
     frame_indices = detections[:,0]
     
     for frame_idx in range(min_frame_idx, max_frame_idx + 1):
-        print("Frame %05d/%05d" % (frame_idx, max_frame_idx))
+        print("generate appearance in frame %05d/%05d" % (frame_idx, max_frame_idx),end="\r")
         
         mask = frame_indices == frame_idx
         #print(mask)

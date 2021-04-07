@@ -165,7 +165,8 @@ def run(seq_dir,
     results = []
     results_centered = []
     def frame_callback(vis, frame_idx):
-        print("Processing frame %05d" % frame_idx)
+        
+        
         # Load image and store appearances in Detector object.
         appearances = create_appearances(
             seq_info["appearances"], frame_idx, min_detection_height)
@@ -184,6 +185,7 @@ def run(seq_dir,
 
         # Update visualization.
         if display:
+            print("Visualize frame {0}".format(frame_idx),end="\r")
             image = cv2.imread(
                 seq_info["image_filenames"][frame_idx], cv2.IMREAD_COLOR)
             vis.set_image(image.copy())

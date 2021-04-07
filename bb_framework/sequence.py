@@ -4,6 +4,9 @@ import os
 import pandas as pd
 import ntpath
 import numpy as np
+import traceback
+
+from log import info
 
 class Sequence():
     '''
@@ -88,7 +91,7 @@ class Sequence():
         
 class Sequence3D():
     '''
-    stores information of 3D tracks of a given sequence
+    stores information of 3D tracks of a given sequenceprint(traceback.format_exc())
     '''
     def __init__(self,seq_dir,cam1,cam2,match_matrix):
         
@@ -116,10 +119,12 @@ class Sequence3D():
             os.makedirs(output_dir)
         tracks = self.tracks
         try:
-            pandaPath = {'frame_idx':list(map(tracks[:,0],int)),'ID':list(map(tracks[:,1],int)),'x':tracks[:,2],'y':tracks[:,3],'z':tracks[:,4]}
+            pandaPath = {'frame_idx':tracks[:,0].astype(int),'ID':tracks[:,1].astype(int),'x':tracks[:,2],'y':tracks[:,3],'z':tracks[:,4]}
+            
             pandaPath = pd.DataFrame(pandaPath)
             pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/"))
-        except:
-            pass
+        except Exception as e:
+            info.error("unexpected error occured while writing 3D sequence "+ self.sequence_name)
+            print(traceback.format_exc())
 
     

@@ -12,7 +12,7 @@ import numpy as np
 import argparse
 import datetime
 from tqdm import tqdm
-
+import traceback
 #import own modules
 import tracking_app
 import tools.track_matching as track_matching
@@ -104,46 +104,47 @@ def main_loop(main_dir,
         ## START TRACKING
         # iterate through sequences
         for i,seq_dir in enumerate(tqdm( seq_dirs_dic['159'])):
-            #try:
-            #print progress bar
-            #info.progress(videosTicked, videosTotal, start_time)
-            #time.sleep(0.1)  # emulating long-playing job
-            
-            # init tracking for the current sequence (from each camera angle)
-            sequence_dic = {}
-            for cam in cameras:
-                sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
-                                 min_detection_height, max_cosine_distance,nn_budget, 
-                                 conf_thresh,bs,app_model,display)
-            
-            if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
-                len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
-                info.info('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
-                continue
-            # calibration data into calib objects
-            stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize_a)                    
-            stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize_b)
+            try:
+                #print progress bar
+                #info.progress(videosTicked, videosTotal, start_time)
+                #time.sleep(0.1)  # emulating long-playing job
 
-            #match 2D tracks between cameras
-            match_matrix159160 = track_matching.match2D(sequence_dic["159"],sequence_dic["160"],stereo159160)
-            match_matrix159161 = track_matching.match2D(sequence_dic["159"],sequence_dic["161"],stereo159161)
+                # init tracking for the current sequence (from each camera angle)
+                sequence_dic = {}
+                for cam in cameras:
+                    sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
+                                     min_detection_height, max_cosine_distance,nn_budget, 
+                                     conf_thresh,bs,app_model,display)
 
+                if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
+                    len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
+                    info.info('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
+                    continue
+                # calibration data into calib objects
+                stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize_a)                    
+                stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize_b)
 
-            sequence_dic["159160"] = sequence.Sequence3D(seq_dir,"159","160",match_matrix159160)
-            sequence_dic["159160"].tracks = stereo159160.triangulate_tracks(sequence_dic["159"],sequence_dic["160"],sequence_dic["159160"])
-
-            sequence_dic["159161"] = sequence.Sequence3D(seq_dir,"159","161",match_matrix159161)
-            sequence_dic["159161"].tracks = stereo159161.triangulate_tracks(sequence_dic["159"],sequence_dic["161"],sequence_dic["159161"])
-            
-            plot.save_3D_plt(day_dir,sequence_dic["159160"],sequence_dic["159161"])
-            
-            for key in sequence_dic:
-                sequence_dic[key].write_sequence(day_dir)
+                #match 2D tracks between cameras
+                match_matrix159160 = track_matching.match2D(sequence_dic["159"],sequence_dic["160"],stereo159160)
+                match_matrix159161 = track_matching.match2D(sequence_dic["159"],sequence_dic["161"],stereo159161)
 
 
-            #except:
-            #    info.error("unexpected error occured while analysing video "+
-            #               ntpath.basename(ntpath.basename(seq_dir))[:-5]+"in day "+ ntpath.basename(day_dir))
+                sequence_dic["159160"] = sequence.Sequence3D(seq_dir,"159","160",match_matrix159160)
+                sequence_dic["159160"].tracks = stereo159160.triangulate_tracks(sequence_dic["159"],sequence_dic["160"],sequence_dic["159160"])
+
+                sequence_dic["159161"] = sequence.Sequence3D(seq_dir,"159","161",match_matrix159161)
+                sequence_dic["159161"].tracks = stereo159161.triangulate_tracks(sequence_dic["159"],sequence_dic["161"],sequence_dic["159161"])
+
+                plot.save_3D_plt(day_dir,sequence_dic["159160"],sequence_dic["159161"])
+
+                for key in sequence_dic:
+                    sequence_dic[key].write_sequence(day_dir)
+
+
+            except Exception as e:
+                info.error("unexpected error occured while analysing video "+
+                           ntpath.basename(ntpath.basename(seq_dir))[:-5]+"in day "+ ntpath.basename(day_dir))
+                print(traceback.format_exc())
 
             #updating progress bar ticker
             videosTicked += 3

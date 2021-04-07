@@ -44,7 +44,7 @@ def generate_detections(seq_dir,conf_thresh,bs):
 
     # detection list
     det_list = []
-    print("Processing %s" % sequence)
+    #print("Processing %s" % sequence)
     image_filenames = sorted(glob.glob(seq_dir+"/*.jpg"))
 
     pointer = 0
@@ -55,7 +55,7 @@ def generate_detections(seq_dir,conf_thresh,bs):
         batch = image_filenames[pointer:pointer+bs]
         detector.predict_on_batch(batch)
 
-        print("Frame %05d/%05d" % (pointer, len(image_filenames)))
+        print("generate detections in frame %05d/%05d" % (pointer, len(image_filenames)),end="\r")
         pointer+=bs
 
     detector.outputs_instances_to_cpu()
