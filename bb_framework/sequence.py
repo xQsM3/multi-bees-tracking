@@ -47,21 +47,23 @@ class Sequence():
         for ID in range(id_min,id_max+1):
             # manipulate rbg
             if (ID-1)>0 and (ID-1)%3 == 0:
+                
                 rbg = rbg//2
                 for e,num in enumerate(rbg):
+
                     if num ==0:
                         rbg[e] = 255
                         continue
                     elif e ==2:
                         rbg[rbg.tolist().index(min(rbg))] = 255
+            
             id_colors.append(tuple(map(int,rbg)))
             # shift
             rbg = np.array([rbg[1],rbg[2],rbg[0]])
             
-
         frame_list = []
+        
         for frame_idx in range(self.min_frame_idx,self.max_frame_idx+1):
-            
             frame = cv.imread(self.frame_paths[frame_idx])
             for ID in range(id_min,id_max+1):
                 # display ID colors on frame
@@ -70,23 +72,24 @@ class Sequence():
                 
                 trackID = self.tracks[self.tracks[:,1]==ID]
                 
-                for idx in range(self.min_frame_idx,frame_idx):
-                    # check if there is an entry for track with ID at frame frame_idx
-                    if not len(trackID[trackID[:,0]==idx]) == 0 \
-                            and not len(trackID[trackID[:,0]==idx-1]) == 0:
-                        # get points of track at frame_idx
-                        pt1 = trackID[trackID[:,0]==idx-1][0,2],trackID[trackID[:,0]==idx-1][0,3]
-                        pt2 = trackID[trackID[:,0]==idx][0,2],trackID[trackID[:,0]==idx][0,3]
-                        cv.line(frame,pt1,pt2,id_colors[ID-1],2)
-                                  
+                # draw ID lines on frame
+                line_points = trackID[trackID[:,0]<=frame_idx]
+                line_points = line_points[:,2:4]
+                if len(line_points) > 1:
+                    cv.polylines(frame, [line_points],isClosed=False,color=id_colors[ID-1], thickness=2)
+                                        
             frame_list.append(frame)         
         
+
         fourcc = cv.VideoWriter_fourcc(*"mp4v")
         #fourcc = cv.VideoWriter_fourcc(*'XVID')
+
         out = cv.VideoWriter(ntpath.join(output_dir,self.sequence_name+'.mp4').replace("\\","/"),
-                             fourcc, 20, (self.image_shape[1],self.image_shape[0]))       
+                             fourcc, 20, (self.image_shape[1],self.image_shape[0]))
+        
         for frame in frame_list:
             out.write(frame)
+            
         out.release()
         
 class Sequence3D():

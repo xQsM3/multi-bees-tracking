@@ -118,25 +118,28 @@ def main_loop(main_dir,
 
                 if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
                     len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
-                    info.info('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
+                    info.warning('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
                     continue
                 # calibration data into calib objects
                 stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize_a)                    
                 stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize_b)
 
                 #match 2D tracks between cameras
+                info.info("match 2D tracks                        ")
                 match_matrix159160 = track_matching.match2D(sequence_dic["159"],sequence_dic["160"],stereo159160)
                 match_matrix159161 = track_matching.match2D(sequence_dic["159"],sequence_dic["161"],stereo159161)
 
-
+                info.info("perform reconstruction")
                 sequence_dic["159160"] = sequence.Sequence3D(seq_dir,"159","160",match_matrix159160)
                 sequence_dic["159160"].tracks = stereo159160.triangulate_tracks(sequence_dic["159"],sequence_dic["160"],sequence_dic["159160"])
 
                 sequence_dic["159161"] = sequence.Sequence3D(seq_dir,"159","161",match_matrix159161)
                 sequence_dic["159161"].tracks = stereo159161.triangulate_tracks(sequence_dic["159"],sequence_dic["161"],sequence_dic["159161"])
-
-                plot.save_3D_plt(day_dir,sequence_dic["159160"],sequence_dic["159161"])
-
+                
+                info.info("draw 3D plot")
+                plot.save_3D_plt(day_dir,sequence_dic["159160"],sequence_dic["159161"],display)
+                
+                info.info("save tracks")
                 for key in sequence_dic:
                     sequence_dic[key].write_sequence(day_dir)
 
@@ -182,7 +185,7 @@ def parse_args():
         "gallery. If None, no budget is enforced.", type=int, default=None)
     parser.add_argument(
         "--conf_thresh", help="confidence threshold "
-        "gallery. If None, no budget is enforced.", type=int, default=0.95)
+        "gallery. If None, no budget is enforced.", type=float, default=0.95)
     parser.add_argument(
         "--batch_size", help="batch size for detection, currently only bs=1 working ", type=int,default=1)
     parser.add_argument(

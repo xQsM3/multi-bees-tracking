@@ -185,7 +185,7 @@ def run(seq_dir,
 
         # Update visualization.
         if display:
-            print("Visualize frame {0}".format(frame_idx),end="\r")
+            print("visualize frame {0}".format(frame_idx),end="\r")
             image = cv2.imread(
                 seq_info["image_filenames"][frame_idx], cv2.IMREAD_COLOR)
             vis.set_image(image.copy())
