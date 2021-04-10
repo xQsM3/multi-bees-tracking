@@ -38,7 +38,7 @@ class Sequence():
         pandaPath.to_csv(ntpath.join(output_dir,self.sequence_name+'.csv').replace("\\","/")) 
         self._generate_video(output_dir)
         
-    def _generate_video(self,output_dir):
+    def _generate_video(self,output_dir,imreadFlag=cv.IMREAD_REDUCED_COLOR_2):
         # create rainbow colors for IDs
         id_min = 1
         id_max = max(self.tracks[:,1])
@@ -62,20 +62,28 @@ class Sequence():
             rbg = np.array([rbg[1],rbg[2],rbg[0]])
             
         frame_list = []
+        text_dis_w = 25 #text distance for ID number written on frame in width
+        text_dis_h = 25 #text distance for ID number written on frame in height
         
         for frame_idx in range(self.min_frame_idx,self.max_frame_idx+1):
-            frame = cv.imread(self.frame_paths[frame_idx])
+            frame = cv.imread(self.frame_paths[frame_idx],imreadFlag)
+            
             for ID in range(id_min,id_max+1):
                 # display ID colors on frame
                 font = cv.FONT_HERSHEY_SIMPLEX
-                cv.putText(frame,str(ID),(50+ID*50,50), font, 2, id_colors[ID-1], 2, cv.LINE_AA)
+                row = int((text_dis_w*ID - text_dis_w) / frame.shape[1])
+                text_dis_h = 25 + 25 * row
+                cv.putText(frame,str(ID),(text_dis_w+ID*text_dis_w,text_dis_h), font, 1, id_colors[ID-1], 1, cv.LINE_AA)
                 
+                # get track with corresponding ID
                 trackID = self.tracks[self.tracks[:,1]==ID]
                 
                 # draw ID lines on frame
                 line_points = trackID[trackID[:,0]<=frame_idx]
                 line_points = line_points[:,2:4]
                 if len(line_points) > 1:
+                    if imreadFlag == cv.IMREAD_REDUCED_COLOR_2:
+                        line_points = line_points // 2
                     cv.polylines(frame, [line_points],isClosed=False,color=id_colors[ID-1], thickness=2)
                                         
             frame_list.append(frame)         
@@ -85,7 +93,7 @@ class Sequence():
         #fourcc = cv.VideoWriter_fourcc(*'XVID')
 
         out = cv.VideoWriter(ntpath.join(output_dir,self.sequence_name+'.mp4').replace("\\","/"),
-                             fourcc, 20, (self.image_shape[1],self.image_shape[0]))
+                             fourcc, 20, (frame.shape[1],frame.shape[0]))
         
         for frame in frame_list:
             out.write(frame)
