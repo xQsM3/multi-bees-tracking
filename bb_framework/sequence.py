@@ -62,19 +62,22 @@ class Sequence():
             rbg = np.array([rbg[1],rbg[2],rbg[0]])
             
         frame_list = []
-        text_dis_w = 25 #text distance for ID number written on frame in width
-        text_dis_h = 25 #text distance for ID number written on frame in height
         
         for frame_idx in range(self.min_frame_idx,self.max_frame_idx+1):
             frame = cv.imread(self.frame_paths[frame_idx],imreadFlag)
             
+            text_dis_w = 30 #text distance for ID number written on frame in width
+            text_dis_h = 15 #text distance for ID number written on frame in height
+            
             for ID in range(id_min,id_max+1):
                 # display ID colors on frame
-                font = cv.FONT_HERSHEY_SIMPLEX
-                row = int((text_dis_w*ID - text_dis_w) / frame.shape[1])
-                text_dis_h = 25 + 25 * row
-                cv.putText(frame,str(ID),(text_dis_w+ID*text_dis_w,text_dis_h), font, 1, id_colors[ID-1], 1, cv.LINE_AA)
-                
+                font = cv.FONT_HERSHEY_SIMPLEX 
+                cv.putText(frame,str(ID),(text_dis_w,text_dis_h), font, 0.5, id_colors[ID-1], 1, cv.LINE_AA)
+                text_dis_w += 30
+                if text_dis_w >= frame.shape[1] - 30:
+                    text_dis_h += 15
+                    text_dis_w = 30
+                    
                 # get track with corresponding ID
                 trackID = self.tracks[self.tracks[:,1]==ID]
                 
@@ -84,7 +87,7 @@ class Sequence():
                 if len(line_points) > 1:
                     if imreadFlag == cv.IMREAD_REDUCED_COLOR_2:
                         line_points = line_points // 2
-                    cv.polylines(frame, [line_points],isClosed=False,color=id_colors[ID-1], thickness=2)
+                    cv.polylines(frame, [line_points],isClosed=False,color=id_colors[ID-1], thickness=1)
                                         
             frame_list.append(frame)         
         
