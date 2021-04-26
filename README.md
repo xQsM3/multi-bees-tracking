@@ -50,22 +50,21 @@ save_format='h5' in the corresponding np.save call
 ## models 
 
 download the appearance descriptor model for bumblebees:
-https://fh-aachen.sciebo.de/apps/files/?dir=/LFTStudies/%23MAVIA/Luc/Code%20Luc/PUBLISHED%20DATA/appearance%20descriptor%20model&fileid=304908441
+https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG
 this model was trained by the API in ./cosine_metric_learning
 put the model in directory:
 ./ant_tracking/resources/networks
 
 
 download the detector model for bumblebees:
-https://fh-aachen.sciebo.de/apps/files/?dir=/LFTStudies/%23MAVIA/Luc/Code%20Luc/PUBLISHED%20DATA/detection%20model&fileid=304907823
+https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG
 this model was trained by the Detectron2 API
 put the model in directory:
 ./ant_tracking/rcnn/models
   
 ## datasets
 the datasets for both detection and appearance description are published here:
-https://fh-aachen.sciebo.de/apps/files/?dir=/LFTStudies/%23MAVIA/Luc/Code%20Luc/PUBLISHED%20DATA/appearance%20descriptor%20dataset&fileid=306848045
-https://fh-aachen.sciebo.de/apps/files/?dir=/LFTStudies/%23MAVIA/Luc/Code%20Luc/PUBLISHED%20DATA/detector%20dataset&fileid=304908507
+https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG
 
 
 ## Usage
