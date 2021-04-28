@@ -1,4 +1,4 @@
-## multi-bees-tracking
+#multi-bees-tracking
 
 multi-bees-tracking is an implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking  
 it can track on single sequences or on a dataset containing multiple sequences, reaching state of the art benchmarks  
@@ -9,15 +9,15 @@ CUDA 11.0
 tensorflow 2.X  
 ubuntu 20.04  
 
-## Installation  
+# Installation  
   
-# bash installation  
+## bash installation  
 
 clone repository  
 $ cd multi-bees-tracking  
 $ bash install.sh  
   
-# trouble shooting to install the tracker on RTX  
+## trouble shooting to install the tracker on RTX  
   
 then run the official tensorflow upgrade notebook on the tracker package (just google upgrade tensorflow v1->v2) to upgrade code from tensorflow v1 to v2.  
 add save_format='h5' to the save() functions as suggested in the output print of the upgrade notebook  
@@ -49,7 +49,7 @@ save() got an unexpected keyword argument 'save_format'
 delete:  
 save_format='h5' in the corresponding np.save call  
   
-## models  
+# models  
   
 download the appearance descriptor model for bumblebees:  
 https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG  
@@ -64,12 +64,12 @@ this model was trained by the Detectron2 API
 put the model in directory:  
 ./ant_tracking/rcnn/models  
     
-## datasets  
+# datasets  
 the datasets for both detection and appearance description are published here:  
 https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG  
   
   
-## Usage  
+# Usage  
   
 the repository contains an implementation of the original ant tracker and the novel bumblebee tracker.  
   
@@ -85,7 +85,7 @@ you can calculate benchmarks for the tracker following the readme in:
   
   
   
-## Authors  
+# Authors  
 Luc Stiemer (email luc.stiemer@alumni.fh-aachen.de)  
 Andreas Thoma (email a.thoma@fh-aachen.de)  
   
