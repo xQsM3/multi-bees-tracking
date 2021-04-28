@@ -1,8 +1,16 @@
-#multi-bees-tracking
+# multi-bees-tracking
 
-multi-bees-tracking is an implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking  
+multi-bees-tracking is a python implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking  
 it can track on single sequences or on a dataset containing multiple sequences, reaching state of the art benchmarks  
-running on a dataset with multiple sequences, the framework uses 3 cameras to reconstruct the 3 dimensional coordinates   
+running on a dataset with multiple sequences, the framework uses 3 cameras to reconstruct the 3 dimensional coordinates of the bumblebees by triangulation 
+
+the tracker is based on Tracking-By-Detection. The detections are provided by a Faster R-CNN model with ResNeXt-101 backbone. The detector model was trained  
+with the Detectron 2 API, using >10000 bumblebee images. The data association between the detections and the existing trajectories is done by an implementation  
+of the multi-ant tracker. It consist of two branches, one for motion matching and one for appearance matching. The motion matcher is based on a Kalman Filter  
+exploiting a constant velocity model. The appearance matcher uses a fully convolutional neural network for appearance description and cosine similarity matching  
+between the detections and the trajectories. 3D reconstruction is then performed by triangulation, using camera calibration matrices provided by matlab calibrator app.  
+
+
 ## tested on machine  
 RTX 3090  
 CUDA 11.0  
@@ -65,9 +73,11 @@ put the model in directory:
 ./ant_tracking/rcnn/models  
     
 # datasets  
-the datasets for both detection and appearance description are published here:  
+the datasets for both detector and appearance descriptor training are published here:  
 https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG  
-  
+
+the bumblebee training dataset for the faster R-CNN detector consists of over 10 000 images with 15 000 annotations
+the bumlbebee training dataset for the appearance descriptor consists of 144 images with 12 bumblebee identities
   
 # Usage  
   
