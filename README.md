@@ -1,7 +1,7 @@
 # multi-bees-tracking
 
-multi-bees-tracking is a python implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking  
-it can track on single sequences or on a dataset containing multiple sequences, reaching state of the art benchmarks  
+multi-bees-tracking is a python implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking method.  
+It can track on single sequences or on a dataset containing multiple sequences, reaching state of the art benchmarks  
 running on a dataset with multiple sequences, the framework uses 3 cameras to reconstruct the 3 dimensional coordinates of the bumblebees  
 by triangulation  
   
