@@ -14,8 +14,8 @@ The code is compatible with Python 2.7 and 3. The following dependencies are nee
 * sklearn
 * OpenCV
 
-Additionally, feature generation requires TensorFlow (>= 1.0).
-
+Additionally, feature generation requires TensorFlow (>= 2.0). if your machine runs on 1.X and you have issues with this
+code, download ant_tracking from https://github.com/holmesww/multi-ants-tracking and implement it in this framework
 
 #
 
@@ -81,7 +81,7 @@ python ant_tracking_app.py \
     --sequence_dir=./BUMBLEBEES/bbox_test/video3 \
     --detection_file=./resources/detections/video3.npy \
     --min_confidence=0.3 \
-    --max_cosine_distance=100000 \
+    --max_cosine_distance=99999.999 \
     --nn_budget=500 \
     --display=True
     
@@ -116,7 +116,7 @@ In package `Ant_Tracking ` is the main tracking code:
 The method for calculating MOT indicators in this article can be found [here]
 ( https://bitbucket.org/amilan/motchallenge-devkit/src/default/).
 
-python evaluate_motchallenge.py     --mot_dir /home/linx123-rtx/multi-ants-tracking/ant_tracking/BUMBLEBEES/bbox_test --detection_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/detections --output_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output --min_confidence=0.3     --max_cosine_distance=100000     --nn_budget=100
+python evaluate_motchallenge.py     --mot_dir /home/linx123-rtx/multi-ants-tracking/ant_tracking/BUMBLEBEES/bbox_test --detection_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/detections --output_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output --min_confidence=0.3     --max_cosine_distance=99999.999     --nn_budget=100
 
 ## show paths 
 python show_results.py --sequence_dir=./BUMBLEBEES/bbox_test/video1 --result_file=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output/video1.txt --show_false_alarms=True
@@ -127,44 +127,5 @@ python generate_videos.py --mot_dir=/home/linx123-rtx/multi-ants-tracking/ant_tr
 
 
 
-
-
-## RTX 3090 TROUBLESHOOTING
-
-pip install tf-nightly-gpu (should be ==2.2.0)
-then run the official tensorflow upgrade notebook on the tracker package (just google upgrade tensorflow v1->v2) to upgrade code from tensorflow v1 to v2. add save_format='h5' to the save() functions as suggested in the
-output print of the upgrade notebook
-
-for the error:
-No module named 'tensorflow.contrib'
-on tensorflow v2:
-1) install tf_slim https://github.com/google-research/tf-slim 
-2) replace import tensorflow.contrib.slim as slim with: 
-import tf_slim as slim
-
-for the error:
-RuntimeError: tf.placeholder() is not compatible with eager execution.
-on tensorflow v2:
-replace the error line with:
-tf.compat.v1.disable_eager_execution()
-
-for the error:
-The name 'net/images:0' refers to a Tensor which does not exist. 
-change:
-Try to change "net/%s:0" => "%s:0" 83 & 85 lines in 'tools/generate_detections.py 
-pip install scikit-learn==0.22.2
-
-
-for the error:
-save() got an unexpected keyword argument 'save_format'
-delete:
-save_format='h5' in the corresponding np.save call
-
-## GENERALE WORKING PRINCIPLE OF THE TRACKER
-
-1)   detection is performed by "MOT challenge detection"
-2)   confidence of matching detections between consecutive frames is calculated by:
-         2a)cosine similarity between these detections is calculated by the ants.pb network (appearance matching)
-         2b)Kalman Filter (motion matching)
          
 
