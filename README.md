@@ -2,13 +2,16 @@
 
 multi-bees-tracking is a python implementation of the multi-ants-tracking https://github.com/holmesww/multi-ants-tracking  
 it can track on single sequences or on a dataset containing multiple sequences, reaching state of the art benchmarks  
-running on a dataset with multiple sequences, the framework uses 3 cameras to reconstruct the 3 dimensional coordinates of the bumblebees by triangulation 
-
-the tracker is based on Tracking-By-Detection. The detections are provided by a Faster R-CNN model with ResNeXt-101 backbone. The detector model was trained  
-with the Detectron 2 API, using >10000 bumblebee images. The data association between the detections and the existing trajectories is done by an implementation  
-of the multi-ant tracker. It consist of two branches, one for motion matching and one for appearance matching. The motion matcher is based on a Kalman Filter  
-exploiting a constant velocity model. The appearance matcher uses a fully convolutional neural network for appearance description and cosine similarity matching  
-between the detections and the trajectories. 3D reconstruction is then performed by triangulation, using camera calibration matrices provided by matlab calibrator app.  
+running on a dataset with multiple sequences, the framework uses 3 cameras to reconstruct the 3 dimensional coordinates of the bumblebees  
+by triangulation  
+  
+the tracker is based on Tracking-By-Detection. The detections are provided by a Faster R-CNN model with ResNeXt-101 backbone. The  
+detector model was trained with the Detectron 2 API, using >10000 bumblebee images. The data association between the detections 
+and the existing trajectories is done by an implementation of the multi-ant tracker. It consist of two branches, one for  
+motion matching and one for appearance matching. The motion matcher is based on a Kalman Filter exploiting a constant velocity  
+model. The appearance matcher uses a fully convolutional neural network for appearance description and cosine similarity matching  
+between the detections and the trajectories. 3D reconstruction is then performed by triangulation, using camera calibration matrices  
+provided by matlab calibrator app.  
 
 
 ## tested on machine  
