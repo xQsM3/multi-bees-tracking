@@ -26,6 +26,7 @@ where <VX_WWWWWWWWWWWWWWW159_00000001.jpg> , <VX_WWWWWWWWWWWWWWW160_00000001.jpg
 
 
 # COMMANDS
+* choose between faster rcnn and retina with the flag --detection_model=retina or --detection_model=rcnn . rcnn is default
 
 * with visualization of the video
 python tracking_plus_reconstruction.py     --main_dir= <main_dir>     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display

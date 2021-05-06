@@ -15,14 +15,14 @@ import sys
 import torch
 from torch.autograd import Variable
 # import modules
-from rcnn.load_rcnn_model import load_model
-from rcnn.detector import Detector
+from detector.load_model import load_model
+from detector.detector import Detector
 
 
 
 
-def generate_detections(seq_dir,conf_thresh,bs):
-    """Generate detections with rcnn detector on a single sequence.
+def generate_detections(det_model,seq_dir,conf_thresh,bs):
+    """Generate detections with rcnn/retina detector on a single sequence.
 
     Parameters
     ----------
@@ -38,8 +38,8 @@ def generate_detections(seq_dir,conf_thresh,bs):
     
     sequence = ntpath.basename(seq_dir)
 
-    # get model predictor object        
-    model,predictor = load_model(float(conf_thresh))
+    # get model predictor object       
+    model,predictor = load_model(float(conf_thresh),det_model)
     detector = Detector(model,predictor)
 
     # detection list
@@ -54,6 +54,11 @@ def generate_detections(seq_dir,conf_thresh,bs):
 
         batch = image_filenames[pointer:pointer+bs]
         detector.predict_on_batch(batch)
+        #model.eval()
+        #with torch.no_grad():
+        #    print(batch)
+        #    print(type(batch))
+        #    outputs = model(batch)
 
         print("generate detections in frame %05d/%05d" % (pointer, len(image_filenames)),end="\r")
         pointer+=bs

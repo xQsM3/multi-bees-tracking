@@ -2,7 +2,7 @@
 
 
 echo "****** create env*****"
-conda create -n multi-bees-trackings python=3.8.5
+conda create -n multi-bees-tracking python=3.8.5
 conda activate multi-bees-tracking
 echo "****** install tensorflow*****"
 pip install tf-nightly-gpu==2.2.0.dev20200508

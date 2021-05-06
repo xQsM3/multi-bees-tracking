@@ -17,7 +17,7 @@ The code is compatible with Python 2.7 and 3. The following dependencies are nee
 Additionally, feature generation requires TensorFlow (>= 2.0). if your machine runs on 1.X and you have issues with this
 code, download ant_tracking from https://github.com/holmesww/multi-ants-tracking and implement it in this framework
 
-#
+
 
 
 ## generating detections with rcnn
@@ -82,7 +82,7 @@ python ant_tracking_app.py \
     --detection_file=./resources/detections/video3.npy \
     --min_confidence=0.3 \
     --max_cosine_distance=99999.999 \
-    --nn_budget=500 \
+    --nn_budget=100 \
     --display=True
     
 

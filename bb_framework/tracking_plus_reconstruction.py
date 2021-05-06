@@ -4,6 +4,7 @@
 #import python modules
 import glob
 import os.path
+import os
 import ntpath
 import cv2 as cv
 import sys
@@ -26,7 +27,7 @@ from log import log
 
 def main_loop(main_dir,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, conf_thresh,bs,app_model,display):
+        nn_budget, conf_thresh,bs,app_model,det_model,display):
     
     """Run multi-target tracker on a particular sequence.
 
@@ -114,7 +115,7 @@ def main_loop(main_dir,
                 for cam in cameras:
                     sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
                                      min_detection_height, max_cosine_distance,nn_budget, 
-                                     conf_thresh,bs,app_model,display)
+                                     conf_thresh,bs,app_model,det_model,display)
 
                 if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
                     len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
@@ -189,8 +190,9 @@ def parse_args():
     parser.add_argument(
         "--batch_size", help="batch size for detection, currently only bs=1 working ", type=int,default=1)
     parser.add_argument(
-        "--appearance_model", help="path to appearance model", default="/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/networks/bumblebees.pb")
-    
+        "--appearance_model", help="path to appearance model", default="./ant_tracking/resources/networks/bumblebees.pb")
+    parser.add_argument(
+        "--detection_model", help="name of detection model, choose rcnn or retina", default="rcnn")    
     parser.add_argument(
         '--display', help="Show intermediate tracking results",
         default=True, action='store_true')
@@ -202,6 +204,12 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     starttime = datetime.datetime.now()
+    
+    #replace ./ in appearance_model directory 
+    if args.appearance_model[0] == '.':
+    	basedir = ntpath.dirname( os.path.dirname(os.path.abspath( __file__ )) )
+    	args.appearance_model = basedir + args.appearance_model[1::]
+    	
     main_loop(
         args.main_dir,args.nms_max_overlap,args.min_detection_height, 
-        args.max_cosine_distance, args.nn_budget,args.conf_thresh,args.batch_size, args.appearance_model,args.display)
+        args.max_cosine_distance, args.nn_budget,args.conf_thresh,args.batch_size, args.appearance_model,args.detection_model,args.display)

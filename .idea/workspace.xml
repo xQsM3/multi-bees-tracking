@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0a41132-4725-4b9b-88b8-d540682f5339" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/ant_tracking/readme.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/log/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/log/log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tools/plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/plot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ant_tracking/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

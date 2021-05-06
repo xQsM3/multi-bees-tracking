@@ -69,11 +69,11 @@ put the model in directory:
 ./ant_tracking/resources/networks  
   
   
-download the detector model for bumblebees:  
+download the detector models for bumblebees:  
 https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG  
-this model was trained by the Detectron2 API  
-put the model in directory:  
-./ant_tracking/rcnn/models  
+the models (faster rcnn and retinanet) were trained by the Detectron2 API  
+put the models in directory:  
+./ant_tracking/detector/models  
     
 # datasets  
 the datasets for both detector and appearance descriptor training are published here:  
