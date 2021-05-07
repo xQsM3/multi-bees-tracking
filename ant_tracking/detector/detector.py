@@ -1,6 +1,8 @@
 import cv2 as cv
 import sys
 import os
+import torch
+import numpy as np
 current = os.path.dirname(__file__)
 parentparent = os.path.dirname(os.path.dirname(current))
 sys.path.append(parentparent)
@@ -16,14 +18,11 @@ class Detector():
             inputs = []
             for image in batch:
                 bgr_image = cv.imread(image, cv.IMREAD_COLOR)
-                '''
-                if prediction with model() is working, replace input with:
-                image = np.transpose(image,(2,0,1))
+                image = np.transpose(bgr_image,(2,0,1))
                 image_tensor = torch.from_numpy(image)
-                inputs.append([{"image":image_tensor}])
-                '''
-            # predict on current image
-            batch_outputs = [self.predictor(bgr_image)]
+                inputs.append({"image":image_tensor})
+                
+            batch_outputs = self.predictor.batch_prediction(batch)
             self.outputs_gpu.extend(batch_outputs)
     def outputs_instances_to_cpu(self):
         outputs_cpu = []
