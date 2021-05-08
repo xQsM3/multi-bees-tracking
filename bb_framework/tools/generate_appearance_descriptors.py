@@ -153,8 +153,8 @@ def generate_appearance_descriptors(encoder, sequence):
     frame_indices = detections[:,0]
     
     for frame_idx in range(min_frame_idx, max_frame_idx + 1):
-        print("generate appearance in frame %05d/%05d" % (frame_idx, max_frame_idx),end="\r")
-        
+        starttime = datetime.datetime.now()
+
         mask = frame_indices == frame_idx
         #print(mask)
         rows = detections[mask]
@@ -166,8 +166,11 @@ def generate_appearance_descriptors(encoder, sequence):
             image_filenames[frame_idx], cv2.IMREAD_COLOR)
         features = encoder(bgr_image, rows[:, 2:6].copy())
         appearances += [np.r_[(row, feature)] for row, feature
-                           in zip(rows, features)]
-            
+                        in zip(rows, features)]
+        fps = 1 / (datetime.datetime.now()-starttime).total_seconds()
+        print("generate appearance in frame %05d/%05d \
+              %01f [fp/s]" % (frame_idx, max_frame_idx,fps),end="\r")
+
     appearances = np.asarray(appearances)
     return appearances
         

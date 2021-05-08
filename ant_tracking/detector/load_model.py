@@ -15,6 +15,7 @@ def load_model(conf_thresh,det_model='rcnn'):
         cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = conf_thresh # Set threshold for this model
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
         cfg.MODEL.WEIGHTS = current+"/ant_tracking/detector/models/bb_rcnn.pth"
+        cfg.MODEL.DEVICE = "cuda"
         #load trained weights
         model = build_model(cfg) # returns a torch.nn.Module
         model.eval()
@@ -31,6 +32,7 @@ def load_model(conf_thresh,det_model='rcnn'):
         cfg.MODEL.RETINANET.SCORE_THRESH_TEST = conf_thresh # Set threshold for this model 
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
         cfg.MODEL.WEIGHTS = current+"/ant_tracking/detector/models/bb_retina.pth"
+        cfg.MODEL.DEVICE = "cuda"
         #load trained weights
         model = build_model(cfg) # returns a torch.nn.Module
         model.eval()

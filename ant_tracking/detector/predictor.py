@@ -1,7 +1,9 @@
+import datetime
+import numpy as np
 from detectron2.engine import DefaultPredictor
 import cv2 as cv
 import torch
-
+import numpy as np
 class Predictor(DefaultPredictor):
     """
     Create a simple end-to-end predictor with the given config that runs on
@@ -43,22 +45,30 @@ class Predictor(DefaultPredictor):
                 the output of the model for the batch. each dic is for one frame
                 See :doc:`/tutorials/models` for details about the format.
         """
+
         with torch.no_grad():  # https://github.com/sphinx-doc/sphinx/issues/4258
             inputs = []
+            images = []
+
             for im in batch:
+                starttime = datetime.datetime.now()
                 #read image
-                im = cv.imread(im, cv.IMREAD_COLOR)
+                im = cv.imread(im,cv.IMREAD_COLOR)
+                #im = np.asarray(Image.open(im))
                 if self.input_format == "RGB":
                     # whether the model expects BGR inputs or RGB
-                    im = im[:, :, ::-1]    
-                
+                    im = im[:, :, ::-1]
                 height, width = im.shape[:2]
                 #transform image to tensor
                 image = self.aug.get_transform(im).apply_image(im)
-                image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1))
-                # prepare input for model
+
+                images.append(image.astype("float32").transpose(2, 0, 1))
+
+            #prepare input for model
+            images = torch.as_tensor(np.array(images),device='cpu')
+            for image in images:
                 inputs.append({"image": image, "height": height, "width": width})
-            
-            # feed input to model for batch prediction    
-            predictions = self.model(inputs)                
+
+            #predict on batch
+            predictions = self.model(inputs)
             return predictions

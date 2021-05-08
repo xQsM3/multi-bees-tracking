@@ -52,6 +52,9 @@ class SceneReconstruction3D:
         self.R = R
         self.T = T
         self.imageSize = imageSize
+        self.image_width = imageSize[1]
+        self.image_height = imageSize[0]
+
     def load_image_pair(
             self,
             img_path1: str,

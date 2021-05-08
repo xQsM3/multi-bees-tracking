@@ -35,7 +35,7 @@ python tracking_plus_reconstruction.py     --main_dir=<main_dir>    --nn_budget=
 * --detection_model=retina or --detection_model=rcnn, rcnn is default slightly more accurate but more computational expensive than
 retina
 * --conf_thresh=0.95 for rcnn, 0.5 for retina recommended
-* --batch_size=8 for rcnn, 64 for retinanet possible on RTX 3090, default is batch_size=1 (slow)
+* --batch_size=8 for rcnn, 16 for retinanet possible on RTX 3090, default is batch_size=1
 
 # EXAMPLE FOR THIS MACHINE
 

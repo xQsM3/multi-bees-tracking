@@ -6,6 +6,7 @@ import glob
 import os.path
 import os
 import ntpath
+from pathlib import Path
 import cv2 as cv
 import sys
 import time
@@ -60,8 +61,12 @@ def main_loop(main_dir,
     #print welcome info
     info.welcome()
 
+
     #get directories for analysis
-    day_dirs = sorted(glob.glob(main_dir+'/*') )
+    if Path(main_dir).is_dir():
+        day_dirs = sorted(glob.glob(main_dir+'/*') )
+    else:
+        sys.exit("[WARNING]: main_dir directory does not exist")
 
     #check if boundary Conditions are available (calibration and masks) and counts video total quantity
     videosTotal,day_dirs = loadData.checkData(day_dirs)
@@ -72,15 +77,13 @@ def main_loop(main_dir,
     #ask if user wants to continue 
     if not input('[INPUT:] press y to start tracking for every folder with located calibrations\n') == 'y':
         sys.exit()
-        
-    #start time
-    start_time = info.startTime()
+
     
     ## START ANALYSIS
     
     # iterate through days
     for day_dir in day_dirs:
-        #try:
+
         #inform user about process
         info.info('analysing day '+ntpath.basename(day_dir+"\n"))
 
@@ -88,9 +91,9 @@ def main_loop(main_dir,
         #read masks
         maskCoordinates['159'],maskCoordinates['160'],maskCoordinates['161'] = loadData.readMasks(day_dir)
         #read calib data of stereo pair a "159160"
-        K159_a,K160_a,D159_a,D160_a,R_a,T_a,F_a,E_a,imageSize_a = loadData.readCalib(day_dir,159,160)
+        K159_a,K160_a,D159_a,D160_a,R_a,T_a,F_a,E_a,imageSize = loadData.readCalib(day_dir,159,160)
         #read calib data of stereo pair b "159161"
-        K159_b,K161_b,D159_b,D161_b,R_b,T_b,F_b,E_b,imageSize_b = loadData.readCalib(day_dir,159,161)
+        K159_b,K161_b,D159_b,D161_b,R_b,T_b,F_b,E_b,imageSize = loadData.readCalib(day_dir,159,161)
 
         #get seq directories in a dictionary with key 159,160,161 for each camera
         seq_dirs_dic = loadData.getVideoDirectory(day_dir)
@@ -104,11 +107,10 @@ def main_loop(main_dir,
 
         ## START TRACKING
         # iterate through sequences
-        for i,seq_dir in enumerate(tqdm( seq_dirs_dic['159'])):
+        pbar = tqdm( seq_dirs_dic['159'])
+        for i,seq_dir in enumerate(pbar):
+            seq_start_time = datetime.datetime.now()
             try:
-                #print progress bar
-                #info.progress(videosTicked, videosTotal, start_time)
-                #time.sleep(0.1)  # emulating long-playing job
 
                 # init tracking for the current sequence (from each camera angle)
                 sequence_dic = {}
@@ -116,17 +118,20 @@ def main_loop(main_dir,
                     sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
                                      min_detection_height, max_cosine_distance,nn_budget, 
                                      conf_thresh,bs,app_model,det_model,display)
+                    # resize track pixel coordinates if calibration image size varies from inference frame size
+                    sequence_dic[cam].resize_tracks(imageSize)
 
+                time = datetime.datetime.now()
                 if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
                     len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
                     info.warning('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
                     continue
                 # calibration data into calib objects
-                stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize_a)                    
-                stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize_b)
+                stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize)
+                stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize)
 
                 #match 2D tracks between cameras
-                info.info("match 2D tracks                        ")
+                info.info("match 2D tracks                                                              ")
                 match_matrix159160 = track_matching.match2D(sequence_dic["159"],sequence_dic["160"],stereo159160)
                 match_matrix159161 = track_matching.match2D(sequence_dic["159"],sequence_dic["161"],stereo159161)
 
@@ -136,10 +141,10 @@ def main_loop(main_dir,
 
                 sequence_dic["159161"] = sequence.Sequence3D(seq_dir,"159","161",match_matrix159161)
                 sequence_dic["159161"].tracks = stereo159161.triangulate_tracks(sequence_dic["159"],sequence_dic["161"],sequence_dic["159161"])
-                
+
                 info.info("draw 3D plot")
                 plot.save_3D_plt(day_dir,sequence_dic["159160"],sequence_dic["159161"],display)
-                
+
                 info.info("save tracks")
                 for key in sequence_dic:
                     sequence_dic[key].write_sequence(day_dir)
@@ -150,12 +155,10 @@ def main_loop(main_dir,
                            ntpath.basename(ntpath.basename(seq_dir))[:-5]+"in day "+ ntpath.basename(day_dir))
                 print(traceback.format_exc())
 
+            total_fps = 3*sequence_dic['159'].max_frame_idx/(datetime.datetime.now()-seq_start_time).total_seconds()
+            pbar.set_description("OVERALL SPEED %01f [fp/s]" % total_fps)
             #updating progress bar ticker
             videosTicked += 3
-
-        #except:
-        #    info.error("unexpected error occured while analysing day " + ntpath.basename(day_dir))
-        #    continue
 
 
 def parse_args():

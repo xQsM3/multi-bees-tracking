@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b0a41132-4725-4b9b-88b8-d540682f5339" name="Default Changelist" comment="">
+    <list default="true" id="fe7d8088-f833-4afb-83c0-bfd8786d158c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/multi-bees-tracking.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/sequence.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/sequence.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/tools/reconstruct.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/reconstruct.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/tools/track_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/track_matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +28,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1rfhKUWFTPwt4S6OIqQsUCCqsri" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1sCwF6YgWaku49LlPjLDoF4QBLd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -22,23 +45,23 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager">
-    <configuration name="log" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="multi-ants-tracking" />
+    <configuration name="generate_detections" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="multi-bees-tracking" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/bb_framework/log" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/bb_framework/tools" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bb_framework/log/log.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -49,19 +72,30 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.log" />
+        <item itemvalue="Python.generate_detections" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b0a41132-4725-4b9b-88b8-d540682f5339" name="Default Changelist" comment="" />
-      <created>1619372988869</created>
+      <changelist id="fe7d8088-f833-4afb-83c0-bfd8786d158c" name="Default Changelist" comment="" />
+      <created>1620389773213</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1619372988869</updated>
+      <updated>1620389773213</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

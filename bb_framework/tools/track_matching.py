@@ -121,7 +121,6 @@ def match2D(sequence1,sequence2,stereo):
         for id2 in range(min_track_id_2,max_track_id_2+1):
             track1 = sequence1.tracks[sequence1.tracks[:,1]==id1]
             track2 = sequence2.tracks[sequence2.tracks[:,1]==id2]
-            
 
 
             frame_indices_1 = track1[:,0]
@@ -154,6 +153,7 @@ def match2D(sequence1,sequence2,stereo):
 
             #remove outliers with IQR algorithm
             distancesc = distances.copy()
+
             if distances:
                 distances = np.array(distances)
                 IQR = iqr(distances)
