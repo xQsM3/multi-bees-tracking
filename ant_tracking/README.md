@@ -78,8 +78,8 @@ python ant_tracking_app.py \
 ```
 
 python ant_tracking_app.py \
-    --sequence_dir=./BUMBLEBEES/bbox_test/video3 \
-    --detection_file=./resources/detections/video3.npy \
+    --sequence_dir=./BUMBLEBEES/bbox_test/video1 \
+    --detection_file=./resources/detections/video1.npy \
     --min_confidence=0.3 \
     --max_cosine_distance=99999.999 \
     --nn_budget=100 \
@@ -113,17 +113,22 @@ In package `Ant_Tracking ` is the main tracking code:
 
 ## Evaluation
 
+
+### create tracking files for evaluation
+python evaluate_motchallenge.py     --mot_dir /home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --detection_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/resources/detections --output_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/tmp/output --min_confidence=0.3     --max_cosine_distance=99999.999     --nn_budget=100
+
+### evaluate with py-motmatrix
 The method for calculating MOT indicators in this article can be found [here]
 ( https://bitbucket.org/amilan/motchallenge-devkit/src/default/).
 
-python evaluate_motchallenge.py     --mot_dir /home/linx123-rtx/multi-ants-tracking/ant_tracking/BUMBLEBEES/bbox_test --detection_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/resources/detections --output_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output --min_confidence=0.3     --max_cosine_distance=99999.999     --nn_budget=100
+go to multi-bees-tracking/py-motmetrics and follow the readme
 
 ## show paths 
 python show_results.py --sequence_dir=./BUMBLEBEES/bbox_test/video1 --result_file=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output/video1.txt --show_false_alarms=True
 
 ## save videos
 
-python generate_videos.py --mot_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/BUMBLEBEES/bbox_test --result_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output --output_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/tmp/output
+python generate_videos.py --mot_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --result_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/tmp/output --output_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/tmp/output
 
 
 

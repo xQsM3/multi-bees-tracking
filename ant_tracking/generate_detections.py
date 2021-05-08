@@ -11,19 +11,18 @@ import errno
 import numpy as np
 import glob
 import sys
-print(sys.path)
 # import torch
 import torch
 from torch.autograd import Variable
 # import modules
-from rcnn.load_rcnn_model import load_model
-from rcnn.detector import Detector
+from detector.load_model import load_model
+from detector.detector import Detector
 
 
 
 
-def generate_detections(seq_dir,conf_thresh,bs):
-    """Generate detections with rcnn detector on sequences.
+def generate_detections(seq_dir,conf_thresh,model_name,bs):
+    """Generate detections with rcnn/retina detector on sequences.
 
     Parameters
     ----------
@@ -40,14 +39,14 @@ def generate_detections(seq_dir,conf_thresh,bs):
     for sequence in os.listdir(seq_dir):
         
         # get model predictor object        
-        model,predictor = load_model(float(conf_thresh))
+        model,predictor = load_model(float(conf_thresh),model_name)
         detector = Detector(model,predictor)
         
         # detection list
         det_list = []
         print("Processing %s" % sequence)
         sequence_dir = os.path.join(seq_dir, sequence)
-        image_dir = os.path.join(sequence_dir, "img1")
+        image_dir = os.path.join(sequence_dir, "img"+sequence[-1::])
         image_filenames = sorted(glob.glob(image_dir+"/*.jpg"))
         
         pointer = 0
@@ -70,8 +69,8 @@ def generate_detections(seq_dir,conf_thresh,bs):
                                  round(box_pred[2]),round(box_pred[3]),1])
             
         
-        
-        with open(ntpath.join(seq_dir,sequence,"det/det.txt").replace("\\","/"),"a") as f:
+
+        with open(ntpath.join(seq_dir,sequence,"det/det.txt").replace("\\","/"),"w") as f:
             for row in det_list:
                 string = ','.join(list(map(str,row)))
                 string +="\n"
@@ -81,24 +80,24 @@ def generate_detections(seq_dir,conf_thresh,bs):
 def parse_args():
     """Parse command line arguments.
     """
-    parser = argparse.ArgumentParser(description="RCNN detector")
+    parser = argparse.ArgumentParser(description="RCNN/Retina detector")
     parser.add_argument(
         "--model",
-        default="./models/bb_rcnn.pth",
-        help="Path to model")
+        default="rcnn",
+        help="model name, either retina or rcnn (retina is faster)")
     parser.add_argument(
         "--seq_dir", help="Path to sequences with structure <seq_dir>/sequenceX/img1/000000X.jpg",
         required=True)
     parser.add_argument(
         "--conf_thresh", default=0.95,help="confidence score threshold for detector")
     parser.add_argument(
-        "--bs",default=1,help="batch size, currently only working for bs=1")
+        "--bs",default=1,help="batch size")
     return parser.parse_args()
 
 def main():
     args = parse_args()
     starttime = datetime.datetime.now()
-    generate_detections(args.seq_dir,args.conf_thresh,args.bs)
+    generate_detections(args.seq_dir,args.conf_thresh,args.model,args.bs)
     endtime = datetime.datetime.now()
     print(endtime - starttime)
 

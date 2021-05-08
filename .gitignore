@@ -1,5 +1,6 @@
 Detectron2_training
 VisualMarkData
+evaluation dataset
 cosine_metric_learning/ANTS
 ant_tracking/BUMBLEBEES/
 ant_tracking/ANTS
