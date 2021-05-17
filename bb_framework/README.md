@@ -27,20 +27,20 @@ where <VX_WWWWWWWWWWWWWWW159_00000001.jpg> , <VX_WWWWWWWWWWWWWWW160_00000001.jpg
 
 # COMMANDS
 * with visualization of the video
-python tracking_plus_reconstruction.py     --main_dir= <main_dir>     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display
+python tracking_plus_reconstruction.py     --main_dir= <main_dir>     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display --conf_thresh=<thresh> --detection_model=<model yolov5l,retina or rcnn>
 
 * without visualization of the video
-python tracking_plus_reconstruction.py     --main_dir=<main_dir>    --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --no-display
+python tracking_plus_reconstruction.py     --main_dir=<main_dir>    --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --no-display --conf_thresh=<thresh> --detection_model=<model yolov5l,retina or rcnn>
 # ADDITIONAL FLAGS
-* --detection_model=retina or --detection_model=rcnn, rcnn is default slightly more accurate but more computational expensive than
+* --detection_model=retina=yolov5l --detection_model=retina or --detection_model=rcnn, yolov5l is default since it is the most accurate and fastest
 retina
-* --conf_thresh=0.95 for rcnn, 0.45 for retina recommended
-* --batch_size=8 for rcnn, 16 for retinanet possible on RTX 3090, default is batch_size=1
+* --conf_thresh=0.95 for rcnn, 0.45 for retina and 0.5 for yolov5l recommended
+* --batch_size=8 for rcnn, 16 for retinanet and 64 for yolov5l possible on RTX 3090, default is batch_size=1
 
 # EXAMPLE FOR THIS MACHINE
 
 * with visualization of the video
-python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --display
+python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=64 --display --conf_thresh=0.5 --detection_model=yolov5l
 
 * without visualization of the video
-python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --no-display
+python tracking_plus_reconstruction.py     --main_dir=/media/linx123-rtx/Elements/test3     --nn_budget=100     --max_cosine_distance=99999.999 --batch_size=1 --no-display --conf_thresh=0.45 --detection_model=retina

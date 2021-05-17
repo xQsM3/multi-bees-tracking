@@ -71,7 +71,7 @@ put the model in directory:
   
 download the detector models for bumblebees:  
 https://fh-aachen.sciebo.de/s/azh8VO32sH3GRvG  
-the models (faster rcnn and retinanet) were trained by the Detectron2 API  
+the models (yolo,faster rcnn and retinanet) were trained by the Detectron2 API  
 put the models in directory:  
 ./ant_tracking/detector/models  
     

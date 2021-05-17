@@ -289,7 +289,7 @@ class SceneReconstruction3D:
         for id1,row in enumerate(sequence3D.match_matrix):
             for id2,el in enumerate(row):
                 if el == True:
-                    track1 = sequence1.tracks[sequence1.tracks[:,1]==id1]
+                    track1 = sequence1.tracks_to_calibSize()[sequence1.tracks[:,1]==id1]
                     for frame_idx in range(sequence1.min_frame_idx,sequence1.max_frame_idx+1):
                         if len(track1[track1[:,0]==frame_idx]) == 0:
                             if 'pts1' in locals():
@@ -303,7 +303,7 @@ class SceneReconstruction3D:
                             else:
                                 pts1 = np.array([track1[track1[:,0]==frame_idx][0,2:4]])
                     
-                    track2 = sequence2.tracks[sequence2.tracks[:,1]==id2]
+                    track2 = sequence2.tracks_to_calibSize()[sequence2.tracks[:,1]==id2]
                     
                     for frame_idx in range(sequence2.min_frame_idx,sequence2.max_frame_idx+1):
                         if len(track2[track2[:,0]==frame_idx]) == 0:

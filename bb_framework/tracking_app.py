@@ -45,7 +45,6 @@ def gather_sequence_info(seq_dir, sequence):
         * max_frame_idx: Index of the last frame.
 
     """
-    image_dir = sequence.seq_dir
     image_filenames = {}
     for i,path in enumerate(sequence.frame_paths):
         image_filenames[i] = path
@@ -128,7 +127,7 @@ def create_appearances(appearances_mat, frame_idx, min_height=0):
 
 def run(seq_dir,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, conf_thresh,bs,app_model,det_model,display):
+        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display,CalibImageSize):
     """Run multi-target tracker on a particular sequence.
 
     Parameters
@@ -152,11 +151,13 @@ def run(seq_dir,
         If True, show visualization of intermediate tracking results.
 
     """
-    sequence = Sequence(seq_dir)
+    sequence = Sequence(seq_dir,CalibImageSize)
     # predict detections
-    sequence.detections = generate_detections(det_model,seq_dir,conf_thresh,bs)
-    # predict appearance descriptors
-    sequence.appearances = get_appearance_descriptors(sequence,app_model)
+    sequence.detections = generate_detections(det_model,seq_dir,conf_thresh,bs,imdim)
+
+    # get appearance descriptors
+    sequence.appearances = get_appearance_descriptors(sequence,app_model,bs)
+
     # safe information in ant tracker syntax such that the tracker can handle it
     seq_info = gather_sequence_info(seq_dir, sequence)
     metric = nn_matching.NearestNeighborDistanceMetric(
@@ -188,18 +189,27 @@ def run(seq_dir,
             print("visualize frame {0}".format(frame_idx),end="\r")
             image = cv2.imread(
                 seq_info["image_filenames"][frame_idx], cv2.IMREAD_COLOR)
+
+            image = cv2.resize(image, (round(sequence.frame_width),round(sequence.frame_height))
+                           , interpolation=cv2.INTER_AREA)
+
             vis.set_image(image.copy())
             vis.draw_detections(appearances)
             vis.draw_trackers(tracker.tracks)
         # Store results.
+
         for track in tracker.tracks:
             if (not track.is_confirmed() or track.time_since_update > 1) and frame_idx > 1:  # 第一帧参与
                 continue
             bbox = track.to_tlwh()
             results.append([
                 frame_idx, track.track_id, bbox[0], bbox[1], bbox[2], bbox[3]])
+
+            bbox = track.mean[:4].copy()
             results_centered.append([
-                frame_idx, track.track_id, round(bbox[0]+bbox[2]/2), round(bbox[1]+bbox[3]/2)])            
+                frame_idx, track.track_id, round(bbox[0]), round(bbox[1])])
+            #results_centered.append([
+            #    frame_idx, track.track_id, round(bbox[0]+bbox[2]/2), round(bbox[1]+bbox[3]/2)])
     # Run tracker.
     if display:
         visualizer = visualization.Visualization(seq_info, update_ms=5)
@@ -207,7 +217,6 @@ def run(seq_dir,
         visualizer = visualization.NoVisualization(seq_info)
 
     visualizer.run(frame_callback)
-
     sequence.tracks = np.array(results_centered)
     cv2.destroyAllWindows()
     return sequence

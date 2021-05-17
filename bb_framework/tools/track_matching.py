@@ -112,16 +112,16 @@ def match2D(sequence1,sequence2,stereo):
     
     # init empty match matrix
     match_matrix = np.zeros((max_track_id_1+1,max_track_id_2+1))
-    thresh = 8
+    thresh = 13
     match_matrix[:] = thresh +1
 
-    
-    
+    #resize tracks to calibration image size
+    tracks1 = sequence1.tracks_to_calibSize()
+    tracks2 =sequence2.tracks_to_calibSize()
     for id1 in range(min_track_id_1,max_track_id_1+1):
         for id2 in range(min_track_id_2,max_track_id_2+1):
-            track1 = sequence1.tracks[sequence1.tracks[:,1]==id1]
-            track2 = sequence2.tracks[sequence2.tracks[:,1]==id2]
-
+            track1 = tracks1[tracks1[:,1]==id1]
+            track2 = tracks2[tracks2[:,1]==id2]
 
             frame_indices_1 = track1[:,0]
             frame_indices_2 = track2[:,0]
@@ -163,7 +163,6 @@ def match2D(sequence1,sequence2,stereo):
                 if distances.size > 0:
                     mean_dissmatch = np.mean(distances)
                     match_matrix[id1,id2] = mean_dissmatch
-
     # convert match matrix to boolean matrix, mean_dissmatch should be smaller then given threshold, to count as True match
     match_matrix = match_matrix < thresh
     return match_matrix

@@ -20,17 +20,11 @@ code, download ant_tracking from https://github.com/holmesww/multi-ants-tracking
 
 
 
-## generating detections with rcnn
-
-python generate_detections.py --seq_dir=/home/linx123-rtx/multi-ants-tracking/ant_tracking/BUMBLEBEES/bbox_test
+## generating detections
 
 
+python generate_detections.py --model=yolov5l --seq_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --conf_thresh=0.3 --imdim=640
    
-Check `python ant_tracking_app.py -h` for an overview of available options.
-
-
-There are also scripts in the repository to visualize results, generate videos, and evaluate the MOT challenge benchmark.
-
 
 
 

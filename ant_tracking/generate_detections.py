@@ -21,7 +21,7 @@ from detector.detector import Detector
 
 
 
-def generate_detections(seq_dir,conf_thresh,model_name,bs):
+def generate_detections(seq_dir,conf_thresh,model_name,bs,imdim):
     """Generate detections with rcnn/retina detector on sequences.
 
     Parameters
@@ -33,11 +33,8 @@ def generate_detections(seq_dir,conf_thresh,model_name,bs):
     conf_thresh
         confidence score threshold for detector
     """
-    
-
-    
     for sequence in os.listdir(seq_dir):
-        
+
         # get model predictor object        
         model,predictor = load_model(float(conf_thresh),model_name)
         detector = Detector(model,predictor)
@@ -55,13 +52,15 @@ def generate_detections(seq_dir,conf_thresh,model_name,bs):
                 bs = len(image_filenames)-pointer
 
             batch = image_filenames[pointer:pointer+bs]
-            detector.predict_on_batch(batch)
+            detector.predict_on_batch(batch,imdim)
             
             print("Frame %05d/%05d" % (pointer, len(image_filenames)))
             pointer+=bs
         
         detector.outputs_instances_to_cpu()
         detector.force_bbox_size()
+        
+        # prepare detection txt
         for frame_idx,output in enumerate(detector.outputs_cpu):
             for box_pred,score_pred,classes_pred in \
             zip(output["pred_boxes"],output["scores"],output["pred_classes"]):
@@ -69,13 +68,12 @@ def generate_detections(seq_dir,conf_thresh,model_name,bs):
                                  round(box_pred[2]),round(box_pred[3]),1])
             
         
-
+	#save detecton txt
         with open(ntpath.join(seq_dir,sequence,"det/det.txt").replace("\\","/"),"w") as f:
             for row in det_list:
                 string = ','.join(list(map(str,row)))
                 string +="\n"
                 f.write(string)
-
 
 def parse_args():
     """Parse command line arguments.
@@ -92,12 +90,15 @@ def parse_args():
         "--conf_thresh", default=0.95,help="confidence score threshold for detector")
     parser.add_argument(
         "--bs",default=1,help="batch size")
+    parser.add_argument(
+    	"--imdim",type=int,default=640,help="max dimension of image (either width or height), use imdim which was used for model training e.g. for yolo its 640")
+    	
     return parser.parse_args()
 
 def main():
     args = parse_args()
     starttime = datetime.datetime.now()
-    generate_detections(args.seq_dir,args.conf_thresh,args.model,args.bs)
+    generate_detections(args.seq_dir,args.conf_thresh,args.model,args.bs,args.imdim)
     endtime = datetime.datetime.now()
     print(endtime - starttime)
 

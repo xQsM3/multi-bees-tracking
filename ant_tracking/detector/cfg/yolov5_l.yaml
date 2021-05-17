@@ -1,0 +1,7 @@
+MODEL:
+  WEIGHTS: "./models/bb_yolov5l.pt"
+  NC: 1
+  CLASSNAMES:
+    0: "bumblebee"
+  ARCHITECTURE: "yolov5l"
+

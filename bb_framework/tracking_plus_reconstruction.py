@@ -3,14 +3,10 @@
 
 #import python modules
 import glob
-import os.path
 import os
 import ntpath
 from pathlib import Path
-import cv2 as cv
 import sys
-import time
-import numpy as np
 import argparse
 import datetime
 from tqdm import tqdm
@@ -28,7 +24,7 @@ from log import log
 
 def main_loop(main_dir,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, conf_thresh,bs,app_model,det_model,display):
+        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display):
     
     """Run multi-target tracker on a particular sequence.
 
@@ -91,9 +87,9 @@ def main_loop(main_dir,
         #read masks
         maskCoordinates['159'],maskCoordinates['160'],maskCoordinates['161'] = loadData.readMasks(day_dir)
         #read calib data of stereo pair a "159160"
-        K159_a,K160_a,D159_a,D160_a,R_a,T_a,F_a,E_a,imageSize = loadData.readCalib(day_dir,159,160)
+        K159_a,K160_a,D159_a,D160_a,R_a,T_a,F_a,E_a,calibImageSize = loadData.readCalib(day_dir,159,160)
         #read calib data of stereo pair b "159161"
-        K159_b,K161_b,D159_b,D161_b,R_b,T_b,F_b,E_b,imageSize = loadData.readCalib(day_dir,159,161)
+        K159_b,K161_b,D159_b,D161_b,R_b,T_b,F_b,E_b,calibImageSize = loadData.readCalib(day_dir,159,161)
 
         #get seq directories in a dictionary with key 159,160,161 for each camera
         seq_dirs_dic = loadData.getVideoDirectory(day_dir)
@@ -117,18 +113,14 @@ def main_loop(main_dir,
                 for cam in cameras:
                     sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
                                      min_detection_height, max_cosine_distance,nn_budget, 
-                                     conf_thresh,bs,app_model,det_model,display)
-                    # resize track pixel coordinates if calibration image size varies from inference frame size
-                    sequence_dic[cam].resize_tracks(imageSize)
-
-                time = datetime.datetime.now()
+                                     conf_thresh,bs,app_model,det_model,imdim,display,calibImageSize)
                 if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
                     len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
                     info.warning('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
                     continue
                 # calibration data into calib objects
-                stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,imageSize)
-                stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,imageSize)
+                stereo159160 = reconstruct.SceneReconstruction3D(K159_a,D159_a,K160_a,D160_a,R_a,T_a,calibImageSize)
+                stereo159161 = reconstruct.SceneReconstruction3D(K159_b,D159_b,K161_b,D161_b,R_b,T_b,calibImageSize)
 
                 #match 2D tracks between cameras
                 info.info("match 2D tracks                                                              ")
@@ -189,13 +181,15 @@ def parse_args():
         "gallery. If None, no budget is enforced.", type=int, default=None)
     parser.add_argument(
         "--conf_thresh", help="confidence threshold "
-        "gallery. If None, no budget is enforced.", type=float, default=0.95)
+        "gallery. If None, no budget is enforced.", type=float)
     parser.add_argument(
         "--batch_size", help="batch size for detection, currently only bs=1 working ", type=int,default=1)
     parser.add_argument(
         "--appearance_model", help="path to appearance model", default="./ant_tracking/resources/networks/bumblebees.pb")
     parser.add_argument(
-        "--detection_model", help="name of detection model, choose rcnn or retina", default="rcnn")    
+        "--detection_model", help="name of detection model, choose yolov5l,rcnn or retina", default="yolov5l")
+    parser.add_argument(
+        "--im_dim", help="image largest dimension (either width or height, aspect ration will remain same)", type=int,default=640)
     parser.add_argument(
         '--display', help="Show intermediate tracking results",
         default=True, action='store_true')
@@ -207,7 +201,9 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     starttime = datetime.datetime.now()
-    
+
+    print(args.appearance_model)
+    print(args.detection_model)
     #replace ./ in appearance_model directory 
     if args.appearance_model[0] == '.':
     	basedir = ntpath.dirname( os.path.dirname(os.path.abspath( __file__ )) )
@@ -215,4 +211,5 @@ if __name__ == '__main__':
     	
     main_loop(
         args.main_dir,args.nms_max_overlap,args.min_detection_height, 
-        args.max_cosine_distance, args.nn_budget,args.conf_thresh,args.batch_size, args.appearance_model,args.detection_model,args.display)
+        args.max_cosine_distance, args.nn_budget,args.conf_thresh,args.batch_size,
+        args.appearance_model,args.detection_model,args.im_dim,args.display)

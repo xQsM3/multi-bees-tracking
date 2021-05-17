@@ -12,7 +12,7 @@ class Sequence():
     '''
     stores informations of 2d sequence such as detections, descriptors tracks..
     '''
-    def __init__(self,seq_dir):
+    def __init__(self,seq_dir,CalibImageSize):
         frame_paths = sorted(glob.glob(seq_dir+"/*.jpg") )
         image_shape = cv.imread(frame_paths[0]).shape
         max_frame_idx = len(frame_paths)
@@ -20,24 +20,31 @@ class Sequence():
         self.seq_dir = seq_dir # string with directory path
         self.sequence_name = os.path.basename(seq_dir) # basename of directory path
         self.frame_paths = frame_paths # list of frame paths
-        self.image_shape = image_shape # tuple (h,w,c)
-        self.frame_width = image_shape[1]
+
         self.frame_height = image_shape[0]
+        self.frame_width = image_shape[1]
+        self.CalibImageSize = CalibImageSize
+        self.image_shape = self.frame_height,self.frame_width # tuple (h,w,c)
         self.min_frame_idx = 0 # int
         self.max_frame_idx = len(frame_paths)-1 # int
         self.detections = [] 
         self.appearances = [] #Matrix of detections+appearance descriptor. The first 10 columns of the detection matrix are the detections.
         self.tracks = [] #np.array with [frame_idx, track_id, x,y]
-    def resize_tracks(self,CalibrationImageSize):
-        # resize track pixel coordinates if calibration image size varies from inference frame size
-        if CalibrationImageSize != self.image_shape:
-            calib_width = CalibrationImageSize[1]
-            calib_height = CalibrationImageSize[0]
-            width_factor = calib_width / self.frame_width
-            height_factor = calib_height / self.frame_height
-            self.tracks[:,2] = self.tracks[:,2] * width_factor
-            self.tracks[:,3] = self.tracks[:,3] * height_factor
-
+    def tracks_to_calibSize(self):
+        # resize track pixel coordinates if calibration image size varies from input frame size
+        if self.CalibImageSize != self.image_shape:
+            calib_width = self.CalibImageSize[1]
+            calib_height = self.CalibImageSize[0]
+            if calib_height > calib_width:
+                sizefactor = calib_height / self.frame_height
+            else:
+                sizefactor = calib_width / self.frame_width
+            tracks = self.tracks.copy()
+            tracks[:,2] = self.tracks[:,2] * sizefactor
+            tracks[:,3] = self.tracks[:,3] * sizefactor
+        else:
+            tracks = self.tracks.copy()
+        return tracks
     def write_sequence(self,day_dir):
         output_dir = ntpath.join(day_dir,"analysis/2Dtracks").replace("\\","/")
 
@@ -130,12 +137,11 @@ class Sequence3D():
         sequence_name = os.path.basename(seq_dir) # basename of directory path
         self.sequence_name = sequence_name.replace(cam1,cam1+cam2)
         self.frame_paths = frame_paths # list of frame paths
-        self.image_shape = image_shape # tuple (h,w,c)
         self.min_frame_idx = 0 # int
         self.max_frame_idx = len(frame_paths)-1 # int
-        self.frame_width = image_shape[1]
         self.frame_height = image_shape[0]
-        
+        self.frame_width = image_shape[1]
+        self.image_shape = self.frame_height,self.frame_width # tuple (h,w,c)
         self.tracks = [] #np.array with [frame_idx, track_id, x,y,z]
         self.match_matrix = match_matrix
     def write_sequence(self,day_dir):

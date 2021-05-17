@@ -21,7 +21,7 @@ from detector.detector import Detector
 
 
 
-def generate_detections(det_model,seq_dir,conf_thresh,bs):
+def generate_detections(det_model,seq_dir,conf_thresh,bs,imdim):
     """Generate detections with rcnn/retina detector on a single sequence.
 
     Parameters
@@ -33,10 +33,6 @@ def generate_detections(det_model,seq_dir,conf_thresh,bs):
     bs
         batch size 
     """
-    
-
-    
-    sequence = ntpath.basename(seq_dir)
 
     # get model predictor object       
     model,predictor = load_model(float(conf_thresh),det_model)
@@ -59,7 +55,7 @@ def generate_detections(det_model,seq_dir,conf_thresh,bs):
         #get system time before prediction
         starttime = datetime.datetime.now()
         #predict on batch
-        detector.predict_on_batch(batch)
+        detector.predict_on_batch(batch,imdim)
         #compute frames / seconds fp/s
         sec = (datetime.datetime.now()-starttime).total_seconds()
         fps = len(batch) / sec
@@ -69,7 +65,6 @@ def generate_detections(det_model,seq_dir,conf_thresh,bs):
                                                           fps),end="\r")
         pointer+=bs
     detector.outputs_instances_to_cpu()
-    detector.force_bbox_size()
     for frame_idx,output in enumerate(detector.outputs_cpu):
         for box_pred,score_pred,classes_pred in \
         zip(output["pred_boxes"],output["scores"],output["pred_classes"]):

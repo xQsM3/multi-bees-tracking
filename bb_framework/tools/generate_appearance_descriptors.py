@@ -174,7 +174,7 @@ def generate_appearance_descriptors(encoder, sequence):
     appearances = np.asarray(appearances)
     return appearances
         
-def get_appearance_descriptors(sequence,app_model):
+def get_appearance_descriptors(sequence,app_model,batch_size):
     encoder = create_box_encoder(app_model, batch_size=32)
     appearances = generate_appearance_descriptors(encoder, sequence)
     return appearances
