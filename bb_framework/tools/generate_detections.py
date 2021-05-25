@@ -65,9 +65,11 @@ def generate_detections(det_model,seq_dir,conf_thresh,bs,imdim):
                                                           fps),end="\r")
         pointer+=bs
     detector.outputs_instances_to_cpu()
+    '''
     for frame_idx,output in enumerate(detector.outputs_cpu):
         for box_pred,score_pred,classes_pred in \
         zip(output["pred_boxes"],output["scores"],output["pred_classes"]):
             det_list.append([frame_idx,-1,round(box_pred[0]),round(box_pred[1]),
                              round(box_pred[2]),round(box_pred[3]),1])
+    '''
     return detector.outputs_cpu

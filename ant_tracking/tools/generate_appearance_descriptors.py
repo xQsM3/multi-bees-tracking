@@ -8,6 +8,15 @@ import tensorflow as tf
 
 import datetime
 
+def bbox_resize(bboxs,app_resize):
+    bboxs = bboxs.astype(dtype=float)
+    bboxs[:,0] -= bboxs[:,2]/2*app_resize
+    bboxs[:, 1] -= bboxs[:, 3]/2*app_resize
+    bboxs[:, 2] += bboxs[:, 2]*app_resize
+    bboxs[:, 3] += bboxs[:, 3]*app_resize
+    bboxs = bboxs.astype(dtype=int)
+    return bboxs
+    
 def _run_in_batches(f, data_dict, out, batch_size):
     data_len = len(out)
     num_batches = int(data_len / batch_size)
@@ -114,7 +123,7 @@ def create_box_encoder(model_filename, input_name="images",
     return encoder
 
 
-def generate_detections(encoder, mot_dir, output_dir, detection_dir=None):
+def generate_detections(encoder, mot_dir, output_dir, app_resize,detection_dir=None):
     """Generate detections with features.
 
     Parameters
@@ -146,11 +155,10 @@ def generate_detections(encoder, mot_dir, output_dir, detection_dir=None):
     for sequence in os.listdir(mot_dir):
         print("Processing %s" % sequence)
         sequence_dir = os.path.join(mot_dir, sequence)
-        image_dir = os.path.join(sequence_dir, "img1")
+        image_dir = os.path.join(sequence_dir, "img"+sequence[-1::])
         image_filenames = {
             int(os.path.splitext(f)[0]): os.path.join(image_dir, f)
             for f in os.listdir(image_dir)}
-        print(image_filenames)
         detection_file = os.path.join(
             detection_dir, sequence, "det/det.txt")
         detections_in = np.loadtxt(detection_file, delimiter=',')
@@ -164,7 +172,11 @@ def generate_detections(encoder, mot_dir, output_dir, detection_dir=None):
             print("Frame %05d/%05d" % (frame_idx, max_frame_idx))
             mask = frame_indices == frame_idx
             rows = detections_in[mask]
-
+            
+            # resize detection bboxes to appearance bbox size of flag is on
+            if 'app_resize' in locals():
+                rows[:,2:6] = bbox_resize(rows[:,2:6],app_resize)
+            
             if frame_idx not in image_filenames:
                 print("WARNING could not find image for frame %d" % frame_idx)
                 continue
@@ -196,6 +208,10 @@ def parse_args():
     parser.add_argument(
         "--output_dir", help="Output directory. Will be created if it does not"
         " exist.", default="detections")
+    parser.add_argument(
+        "--app_resize", help='''appearance bounding box resize. e.g. 0.2 increases the detection bboxes by 20%,\n"
+                              -0.2 decreases. the resized bboxes are the input for the appearance descriptor. Default is 0% (no resizing).
+                              reducing the size can improve inference time of appearance descriptor. however, it is not remommended''', type=float,default=False)
     return parser.parse_args()
 
 
@@ -204,7 +220,7 @@ def main():
     encoder = create_box_encoder(args.model, batch_size=32)
     starttime = datetime.datetime.now()
     generate_detections(encoder, args.mot_dir, args.output_dir,
-                        args.detection_dir)
+                        args.app_resize,args.detection_dir)
     endtime = datetime.datetime.now()
     print(endtime - starttime)
 

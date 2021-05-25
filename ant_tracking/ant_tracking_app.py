@@ -42,7 +42,8 @@ def gather_sequence_info(sequence_dir, detection_file):
         * max_frame_idx: Index of the last frame.
 
     """
-    image_dir = os.path.join(sequence_dir, "img1")
+    seq_number = sequence_dir.split("/")[-1].replace("video","")
+    image_dir = os.path.join(sequence_dir, "img"+seq_number)
     image_filenames = {
         int(os.path.splitext(f)[0]): os.path.join(image_dir, f)
         for f in os.listdir(image_dir)}

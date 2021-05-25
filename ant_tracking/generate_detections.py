@@ -35,8 +35,8 @@ def generate_detections(seq_dir,conf_thresh,model_name,bs,imdim):
     """
     for sequence in os.listdir(seq_dir):
 
-        # get model predictor object        
-        model,predictor = load_model(float(conf_thresh),model_name)
+        # get model predictor object       
+        model,predictor = load_model(conf_thresh,model_name)
         detector = Detector(model,predictor)
         
         # detection list
@@ -58,7 +58,6 @@ def generate_detections(seq_dir,conf_thresh,model_name,bs,imdim):
             pointer+=bs
         
         detector.outputs_instances_to_cpu()
-        detector.force_bbox_size()
         
         # prepare detection txt
         for frame_idx,output in enumerate(detector.outputs_cpu):
@@ -87,7 +86,7 @@ def parse_args():
         "--seq_dir", help="Path to sequences with structure <seq_dir>/sequenceX/img1/000000X.jpg",
         required=True)
     parser.add_argument(
-        "--conf_thresh", default=0.95,help="confidence score threshold for detector")
+        "--conf_thresh", type=float,default=0.95,help="confidence score threshold for detector")
     parser.add_argument(
         "--bs",default=1,help="batch size")
     parser.add_argument(

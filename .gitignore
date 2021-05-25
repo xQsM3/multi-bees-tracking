@@ -9,4 +9,4 @@ ant_tracking/detector/models
 ant_tracking/tmp
 ant_tracking/.ipynb_checkpoints
 ipynb_checkpoints
-
+yolo_training

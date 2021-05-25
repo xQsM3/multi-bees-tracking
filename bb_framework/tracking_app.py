@@ -127,7 +127,7 @@ def create_appearances(appearances_mat, frame_idx, min_height=0):
 
 def run(seq_dir,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display,CalibImageSize):
+        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display,CalibImageSize,app_resize):
     """Run multi-target tracker on a particular sequence.
 
     Parameters
@@ -156,7 +156,7 @@ def run(seq_dir,
     sequence.detections = generate_detections(det_model,seq_dir,conf_thresh,bs,imdim)
 
     # get appearance descriptors
-    sequence.appearances = get_appearance_descriptors(sequence,app_model,bs)
+    sequence.appearances = get_appearance_descriptors(sequence,app_model,bs,app_resize)
 
     # safe information in ant tracker syntax such that the tracker can handle it
     seq_info = gather_sequence_info(seq_dir, sequence)

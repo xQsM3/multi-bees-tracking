@@ -24,7 +24,7 @@ from log import log
 
 def main_loop(main_dir,
         nms_max_overlap, min_detection_height, max_cosine_distance,
-        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display):
+        nn_budget, conf_thresh,bs,app_model,det_model,imdim,display,app_resize):
     
     """Run multi-target tracker on a particular sequence.
 
@@ -113,7 +113,7 @@ def main_loop(main_dir,
                 for cam in cameras:
                     sequence_dic[cam] = tracking_app.run(seq_dirs_dic[cam][i],nms_max_overlap, 
                                      min_detection_height, max_cosine_distance,nn_budget, 
-                                     conf_thresh,bs,app_model,det_model,imdim,display,calibImageSize)
+                                     conf_thresh,bs,app_model,det_model,imdim,display,calibImageSize,app_resize)
                 if len(sequence_dic['159'].frame_paths) != len(sequence_dic['160'].frame_paths) or \
                     len(sequence_dic['159'].frame_paths) != len(sequence_dic['161'].frame_paths):
                     info.warning('sequence 159 / 160 / 161 different length for '+sequence_dic['159'].sequence_name[:-6])
@@ -180,6 +180,10 @@ def parse_args():
         "--nn_budget", help="Maximum size of the appearance descriptors "
         "gallery. If None, no budget is enforced.", type=int, default=None)
     parser.add_argument(
+        "--app_resize", help='''appearance bounding box resize. e.g. 0.2 increases the detection bboxes by 20%,\n"
+                              -0.2 decreases. the resized bboxes are the input for the appearance descriptor. Default is 0% (no resizing).
+                              reducing the size can improve inference time of appearance descriptor. however, it is not remommended''', type=float,default=False)
+    parser.add_argument(
         "--conf_thresh", help="confidence threshold "
         "gallery. If None, no budget is enforced.", type=float)
     parser.add_argument(
@@ -212,4 +216,4 @@ if __name__ == '__main__':
     main_loop(
         args.main_dir,args.nms_max_overlap,args.min_detection_height, 
         args.max_cosine_distance, args.nn_budget,args.conf_thresh,args.batch_size,
-        args.appearance_model,args.detection_model,args.im_dim,args.display)
+        args.appearance_model,args.detection_model,args.im_dim,args.display,args.app_resize)

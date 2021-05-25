@@ -42,7 +42,8 @@ def load_model(conf_thresh,det_model):
         # load config
         cfg = get_cfg()
         cfg.merge_from_file(scriptpath+"/ant_tracking/detector/cfg/retinanet_R_101_FPN_3x.yaml")
-        cfg.MODEL.RETINANET.SCORE_THRESH_TEST = conf_thresh # Set threshold for this model 
+        cfg.MODEL.RETINANET.SCORE_THRESH_TEST = conf_thresh # Set threshold for this model
+        cfg.MODEL_YOLO_IOU_THRESH = 0.45 # default iou thresh for nms 
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
         cfg.MODEL.WEIGHTS = scriptpath+"/ant_tracking/detector/"+cfg.MODEL.WEIGHTS[1::]
         cfg.MODEL.DEVICE = "cuda"
@@ -62,6 +63,7 @@ def load_model(conf_thresh,det_model):
         cfg = Config()
         cfg.merge_from_file(scriptpath+"/ant_tracking/detector/cfg/yolov5_l.yaml")
         cfg.MODEL_YOLO_CONF_THRESH = conf_thresh
+        cfg.MODEL_YOLO_IOU_THRESH = 0.45 # default iou thresh for nms
         cfg.MODEL_DEVICE = "cuda"
         cfg.MODEL_WEIGHTS = scriptpath+"/ant_tracking/detector/"+cfg.MODEL_WEIGHTS[1::]
         # create predictor

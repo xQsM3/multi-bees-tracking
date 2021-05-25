@@ -96,6 +96,8 @@ class ExternPredictor():
         self.model = torch.hub.load('ultralytics/yolov5', 'custom', path=cfg.MODEL_WEIGHTS).to(self.device)
         self.model.eval()
         self.cfg = cfg
+        self.model.conf = cfg.MODEL_YOLO_CONF_THRESH
+        self.model.iou = cfg.MODEL_YOLO_IOU_THRESH
     def batch_prediction(self,batch,imdim):
 
         with torch.no_grad():  # https://github.com/sphinx-doc/sphinx/issues/4258

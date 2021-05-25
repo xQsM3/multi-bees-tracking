@@ -5,21 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe7d8088-f833-4afb-83c0-bfd8786d158c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/application_util/visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/application_util/visualization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/detector/detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ant_tracking/ant_tracking_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/ant_tracking_app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/generate_detections.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/generate_detections.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/sequence.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/sequence.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ant_tracking/tools/generate_appearance_descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/tools/generate_appearance_descriptors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tools/reconstruct.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/reconstruct.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tools/track_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/track_matching.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bb_framework/tracking_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tracking_app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/sequence_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/sequence_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_4.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +64,25 @@
       </console-settings>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tracking_plus_reconstruction">
+  <component name="RunManager" selected="Python.PlotTogether">
+    <configuration name="PlotTogether" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="multi-bees-tracking" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yolo_training" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/yolo_training/PlotTogether.py" />
+      <option name="PARAMETERS" value="$PROJECT_DIR$/yolo_training/bb_yolo_improved_bbox" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="improve_trainset" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="multi-bees-tracking" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,6 +147,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.PlotTogether" />
       <item itemvalue="Python.tracking_plus_reconstruction" />
       <item itemvalue="Python.scratch" />
       <item itemvalue="Python.improve_trainset" />

@@ -8,6 +8,16 @@ import tensorflow as tf
 import glob
 import datetime
 
+def bbox_resize(bboxs,app_resize):
+    bboxs = bboxs.astype(dtype=float)
+    bboxs[:,0] -= bboxs[:,2]/2*app_resize
+    bboxs[:, 1] -= bboxs[:, 3]/2*app_resize
+    bboxs[:, 2] += bboxs[:, 2]*app_resize
+    bboxs[:, 3] += bboxs[:, 3]*app_resize
+    bboxs = bboxs.astype(dtype=int)
+    return bboxs
+
+
 def _run_in_batches(f, data_dict, out, batch_size):
     data_len = len(out)
     num_batches = int(data_len / batch_size)
@@ -114,7 +124,7 @@ def create_box_encoder(model_filename, input_name="images",
     return encoder
 
 
-def generate_appearance_descriptors(encoder, sequence):
+def generate_appearance_descriptors(encoder, sequence,app_resize):
     """Generate detections with features.
 
     Parameters
@@ -159,6 +169,10 @@ def generate_appearance_descriptors(encoder, sequence):
         #print(mask)
         rows = detections[mask]
 
+        # resize detection bboxes to appearance bbox size of flag is on
+        if 'app_resize' in locals():
+            rows[:,2:6] = bbox_resize(rows[:,2:6],app_resize)
+
         if frame_idx not in image_filenames:
             print("WARNING could not find image for frame %d" % frame_idx)
             continue
@@ -174,7 +188,7 @@ def generate_appearance_descriptors(encoder, sequence):
     appearances = np.asarray(appearances)
     return appearances
         
-def get_appearance_descriptors(sequence,app_model,batch_size):
+def get_appearance_descriptors(sequence,app_model,batch_size,app_resize):
     encoder = create_box_encoder(app_model, batch_size=32)
-    appearances = generate_appearance_descriptors(encoder, sequence)
+    appearances = generate_appearance_descriptors(encoder, sequence,app_resize)
     return appearances
