@@ -69,4 +69,4 @@ python -m motmetrics.apps.eval_motchallenge GT_ROOT_PATH TEST_ROOT_PATH
 
 example: 
 
-python -m motmetrics.apps.eval_motchallenge /home/linx123-rtx/multi-bees-tracking/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/gt_root /home/linx123-rtx/multi-bees-tracking/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/test_root
+python -m motmetrics.apps.eval_motchallenge /home/linx123-rtx/multi-bees-tracking/py-motmetrics/bbtracker_with_labels_as_detection/gt_root /home/linx123-rtx/multi-bees-tracking/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/test_root

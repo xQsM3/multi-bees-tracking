@@ -25,7 +25,9 @@ code, download ant_tracking from https://github.com/holmesww/multi-ants-tracking
 '''
 python generate_detections.py --model=retina --seq_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --conf_thresh=0.45 --imdim=640
 
-python generate_detections.py --model=yolov5l --seq_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --conf_thresh=0.6 --imdim=640
+python generate_detections.py --model=yolov5l --seq_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --conf_thresh=0.35 --imdim=640
+
+python generate_detections.py --model=rcnn --seq_dir=/home/linx123-rtx/multi-bees-tracking/ant_tracking/BUMBLEBEES/bbox_test --conf_thresh=0.99 --imdim=640
 '''
 
 
@@ -46,8 +48,9 @@ python tools/generate_appearance_descriptors.py \
     --model=resources/networks/bumblebees.pb \
     --mot_dir=./BUMBLEBEES/bbox_test \
     --output_dir=./resources/detections/
-    --app_resize=0.6    
+    --app_resize=0.5    
 ```
+
 The model has been generated with TensorFlow 1.4. If you run into
 incompatibility, re-export the frozen inference graph to obtain a new
 `ants.pb` that is compatible with your version:

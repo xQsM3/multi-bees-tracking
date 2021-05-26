@@ -5,27 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe7d8088-f833-4afb-83c0-bfd8786d158c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/ant_tracking_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/ant_tracking_app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/load_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/detector/predictor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/generate_detections.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/generate_detections.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ant_tracking/tools/generate_appearance_descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/ant_tracking/tools/generate_appearance_descriptors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_appearance_descriptors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tools/generate_detections.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tracking_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tracking_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" beforeDir="false" afterPath="$PROJECT_DIR$/bb_framework/tracking_plus_reconstruction.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py-motmetrics/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_handlabeled/gt_root/sequence_1/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_handlabeled/gt_root/sequence_2/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_handlabeled/gt_root/sequence_3/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_handlabeled/gt_root/sequence_4/gt/gt.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_3.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_rcnn/test_root/sequence_4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/sequence_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/sequence_2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/test_root/sequence_4.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/gt_root/sequence_1/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/gt_root/sequence_3/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/gt_root/sequence_4/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_retina/sequence_2/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/gt_root/sequence_1/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/gt_root/sequence_3/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/gt_root/sequence_4/gt/gt.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py-motmetrics/bbtracker_with_labels_as_detection/with_yolov5l/sequence_2/gt/gt.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

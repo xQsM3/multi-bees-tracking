@@ -3,7 +3,7 @@ from __future__ import division, print_function, absolute_import
 
 import argparse
 import os
-
+import time
 import cv2
 import numpy as np
 
@@ -192,6 +192,7 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
             vis.set_image(image.copy())
             vis.draw_detections(detections)
             vis.draw_trackers(tracker.tracks)
+            #time.sleep(0.5)
 
         # Store results.
         for track in tracker.tracks:

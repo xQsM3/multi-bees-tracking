@@ -34,7 +34,7 @@ python tracking_plus_reconstruction.py     --main_dir=<main_dir>    --nn_budget=
 # ADDITIONAL FLAGS
 * --detection_model=retina=yolov5l --detection_model=retina or --detection_model=rcnn, yolov5l is default since it is the most accurate and fastest
 retina
-* --conf_thresh=0.95 for rcnn, 0.45 for retina and 0.5 for yolov5l recommended
+* --conf_thresh=0.95 for rcnn, 0.45 for retina and 0.35 for yolov5l recommended
 * --batch_size=8 for rcnn, 16 for retinanet and 64 for yolov5l possible on RTX 3090, default is batch_size=1
 
 # EXAMPLE FOR THIS MACHINE
